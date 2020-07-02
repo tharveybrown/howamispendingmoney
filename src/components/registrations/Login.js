@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Input from "./Input";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
@@ -8,8 +9,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
+      // firstName: "",
+      // lastName: "",
       email: "",
       password: "",
       errors: "",
@@ -25,8 +26,8 @@ class Login extends Component {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
     let user = {
-      first_name: firstName,
-      last_name: lastName,
+      // first_name: firstName,
+      // last_name: lastName,
       email: email,
       password: password,
     };
@@ -62,45 +63,52 @@ class Login extends Component {
   render() {
     const { firstName, lastName, email, password } = this.state;
     return (
-      <div>
-        <h1>Log In</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="firstName"
-            type="text"
-            name="firstName"
-            value={firstName}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="lastName"
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="email"
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <button placeholder="submit" type="submit">
-            Log In
-          </button>
-          <div>
-            or <Link to="/signup">sign up</Link>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">Log In</h5>
+                <form className="form-signin" onSubmit={this.handleSubmit}>
+                  <Input
+                    placeholder="Email"
+                    type="text"
+                    handleChange={this.handleChange}
+                    id="inputEmail"
+                    name="email"
+                    value={email}
+                  />
+                  <Input
+                    placeholder="Password"
+                    type="text"
+                    handleChange={this.handleChange}
+                    id="inputPassword"
+                    name="password"
+                    value={password}
+                  />
+
+                  <button
+                    placeholder="submit"
+                    className="btn btn-primary btn-block text-uppercase"
+                    type="submit"
+                  >
+                    Sign in
+                  </button>
+                  <hr className="my-4"></hr>
+                  <Link to="/signup">
+                    <button
+                      className="btn btn-lg btn-google btn-block text-uppercase"
+                      type="submit"
+                    >
+                      Sign up
+                    </button>
+                  </Link>
+                </form>
+                <div>{this.state.errors ? this.handleErrors() : null}</div>
+              </div>
+            </div>
           </div>
-        </form>
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
+        </div>
       </div>
     );
   }
