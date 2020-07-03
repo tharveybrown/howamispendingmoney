@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import Input from "./Input";
 import axios from "axios";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
+import { Link } from "react-router-dom";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -76,50 +78,77 @@ class Signup extends Component {
       password_confirmation,
     } = this.state;
     return (
-      <div>
-        <h1>Sign Up</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="firstName"
-            type="text"
-            name="firstName"
-            value={firstName}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="lastName"
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="email"
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="password confirmation"
-            type="password"
-            name="password_confirmation"
-            value={password_confirmation}
-            onChange={this.handleChange}
-          />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">Sign Up</h5>
+                <form className="form-signin" onSubmit={this.handleSubmit}>
+                  <Input
+                    placeholder="First Name"
+                    type="text"
+                    handleChange={this.handleChange}
+                    id="inputFirstName"
+                    name="firstName"
+                    value={firstName}
+                  />
+                  <Input
+                    placeholder="Last Name"
+                    type="text"
+                    handleChange={this.handleChange}
+                    id="inputLastName"
+                    name="lastName"
+                    value={lastName}
+                  />
 
-          <button placeholder="submit" type="submit">
-            Sign Up
-          </button>
-        </form>
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
+                  <Input
+                    placeholder="Email"
+                    type="text"
+                    handleChange={this.handleChange}
+                    id="inputEmail"
+                    name="email"
+                    value={email}
+                  />
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    handleChange={this.handleChange}
+                    id="inputPassword"
+                    name="password"
+                    value={password}
+                  />
+                  <Input
+                    placeholder="Password Confirmation"
+                    type="password"
+                    handleChange={this.handleChange}
+                    id="inputPasswordConfirmation"
+                    name="password_confirmation"
+                    value={password_confirmation}
+                  />
+
+                  <button
+                    placeholder="submit"
+                    className="btn btn-primary btn-block text-uppercase"
+                    type="submit"
+                  >
+                    Sign Up
+                  </button>
+                  <hr className="my-4"></hr>
+                  <Link to="/login">
+                    <button
+                      className="btn btn-lg btn-google btn-block text-uppercase"
+                      type="submit"
+                    >
+                      Or Sign In
+                    </button>
+                  </Link>
+                </form>
+                <div>{this.state.errors ? this.handleErrors() : null}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

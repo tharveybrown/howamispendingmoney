@@ -16,7 +16,9 @@ const Input = (props) => {
         required
       />
 
-      <label for={id}>{placeholder}</label>
+      <label className="has-float-label" for={id}>
+        {placeholder}
+      </label>
     </div>
   );
 };

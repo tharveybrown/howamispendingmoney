@@ -3,14 +3,13 @@ import Input from "./Input";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
+
 const url = runtimeEnv().REACT_APP_API_URL;
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // firstName: "",
-      // lastName: "",
       email: "",
       password: "",
       errors: "",
@@ -26,8 +25,6 @@ class Login extends Component {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
     let user = {
-      // first_name: firstName,
-      // last_name: lastName,
       email: email,
       password: password,
     };
@@ -61,7 +58,7 @@ class Login extends Component {
     );
   };
   render() {
-    const { firstName, lastName, email, password } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -80,7 +77,7 @@ class Login extends Component {
                   />
                   <Input
                     placeholder="Password"
-                    type="text"
+                    type="password"
                     handleChange={this.handleChange}
                     id="inputPassword"
                     name="password"
