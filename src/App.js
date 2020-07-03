@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Login from "./components/registrations/Login";
 import Signup from "./components/registrations/Signup";
 import "./App.css";
+import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const url = runtimeEnv().REACT_APP_API_URL;
@@ -18,10 +19,6 @@ class App extends Component {
   }
   componentDidMount() {
     this.loginStatus();
-  }
-
-  componentWillMount() {
-    return this.props.loggedInStatus ? this.redirect() : null;
   }
 
   loginStatus = () => {
@@ -49,9 +46,6 @@ class App extends Component {
     });
   };
 
-  redirect = () => {
-    this.props.history.push("/");
-  };
   render() {
     return (
       <div>

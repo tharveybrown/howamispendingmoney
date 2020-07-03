@@ -15,15 +15,21 @@ class Login extends Component {
       errors: "",
     };
   }
+
+  componentWillMount() {
+    return this.props.loggedInStatus ? this.redirect() : null;
+  }
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
     });
   };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    const { firstName, lastName, email, password } = this.state;
+    const { email, password } = this.state;
     let user = {
       email: email,
       password: password,
@@ -46,6 +52,7 @@ class Login extends Component {
   redirect = () => {
     this.props.history.push("/");
   };
+
   handleErrors = () => {
     return (
       <div>
