@@ -3,9 +3,12 @@ import axios from "axios";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import { PlaidLink } from "react-plaid-link";
 
-const url = runtimeEnv().REACT_APP_API_URL;
+let env = runtimeEnv();
+const url = env.REACT_APP_API_URL;
+const plaidPublicKey = env.REACT_APP_PLAID_PUBLIC_KEY;
+
 // const { plaidPublicKey } = process.env.PLAID_PUBLIC_KEY;
-console.log(process.env);
+console.log(env);
 // console.log(plaidPublicKey);
 
 class BankAuth extends React.Component {
@@ -58,7 +61,7 @@ class BankAuth extends React.Component {
           clientName="Your app name"
           env="sandbox"
           product={["auth", "transactions"]}
-          publicKey="2718fb47792922b7cf3d78cb5c6b7d"
+          publicKey={plaidPublicKey}
           onSuccess={this.onSuccess}
         >
           Connect a bank account
