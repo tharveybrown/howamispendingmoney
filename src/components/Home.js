@@ -9,13 +9,13 @@ const url = runtimeEnv().REACT_APP_API_URL;
 
 const Home = (props) => {
   const handleClick = () => {
-    axios
-      .delete(`${url}/logout`, { withCredentials: true })
-      .then((response) => {
-        props.handleLogout();
-        props.history.push("/");
-      })
-      .catch((error) => console.log(error));
+    // axios
+    //   .delete(`${url}/logout`, { withCredentials: true })
+    //   .then((response) => {
+    props.history.push("/");
+    props.handleLogout();
+    // })
+    // .catch((error) => console.log(error));
   };
 
   return (
@@ -27,7 +27,7 @@ const Home = (props) => {
       <br></br>
       {props.loggedInStatus ? (
         <>
-          <Link to="/logout" onClick={handleClick}>
+          <Link to="/" onClick={handleClick}>
             Log Out
           </Link>
           <BankAuth />

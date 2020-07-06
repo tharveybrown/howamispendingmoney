@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
 import Signup from "./components/registrations/Signup";
@@ -9,6 +10,59 @@ import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const url = runtimeEnv().REACT_APP_API_URL;
+
+// function App() {
+//   const [user, setUser] = useState({});
+//   const [form, setForm] = useState("");
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//       axios
+//         .get(`${url}/auto_login`, {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         })
+//         .then((resp) => resp.json())
+//         .then((data) => {
+//           setUser(data);
+//           // console.log(data)
+//         });
+//     }
+//   }, []);
+
+//   const handleLogin = (user) => {
+//     setUser(user);
+//   };
+
+//   const handleFormSwitch = (input) => {
+//     setForm(input);
+//   };
+
+//   console.log(user);
+
+//   const renderForm = () => {
+//     switch (form) {
+//       case "login":
+//         return <Login handleLogin={handleLogin} />;
+//         break;
+//       default:
+//         return <Signup handleLogin={handleLogin} />;
+//     }
+//   };
+//   return (
+//     <div className="App">
+//       {renderForm()}
+//       <button onClick={handleAuthClick} className="ui button">
+//         Access Authorized Route
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -18,28 +72,47 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    this.loginStatus();
+    this.useEffect();
   }
 
-  loginStatus = () => {
+  handleAuthClick = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`${url}/logged_in`, { withCredentials: true })
-      .then((response) => {
-        if (response.data.logged_in) {
-          this.handleLogin(response);
-        } else {
-          this.handleLogout();
-        }
+      .get(`${url}/user_is_authed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => console.log("api errors:", error));
+      .then((resp) => resp.json())
+      .then((data) => console.log(data));
   };
+
+  useEffect = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`${url}/auto_login`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((resp) => resp.data)
+        .then((data) => {
+          this.setState({ user: data, isLoggedIn: true });
+          // console.log(data)
+        });
+    }
+  };
+
   handleLogin = (data) => {
+    console.log(data);
     this.setState({
       isLoggedIn: true,
-      user: data.user,
+      user: data,
     });
   };
   handleLogout = () => {
+    localStorage.clear();
     this.setState({
       isLoggedIn: false,
       user: {},

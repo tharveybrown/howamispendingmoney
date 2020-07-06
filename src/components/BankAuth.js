@@ -18,35 +18,43 @@ class BankAuth extends React.Component {
       transactions: [],
     };
   }
-  handleClick = () => {
-    axios
-      .delete(`${url}/logout`, { withCredentials: true })
-      .then((response) => {
-        this.props.handleLogout();
-        this.props.history.push("/");
-      })
-      .catch((error) => console.log(error));
-  };
+
   onSuccess = (token, metadata) => {
+    const authToken = localStorage.getItem("token");
     axios
-      .post(`${url}/authlogin`, { token }, { withCredentials: true })
+      .post(
+        `${url}/authlogin`,
+
+        { token },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("RESPONSE", response);
         return response.data;
       })
       .then(({ access_token }) => {
         localStorage.setItem("access_token", access_token);
-        return this.fetchTransactions(access_token);
+        return this.fetchTransactions(access_token, authToken);
       })
       .catch((err) => console.log(err));
   };
 
-  fetchTransactions = (access_token) => {
-    const config = {
-      headers: { Authorization: `Bearer ${access_token}` },
-    };
+  fetchTransactions = (access_token, authToken) => {
+    // debugger;
     axios
-      .get(`${url}/transactions`, config, { withCredentials: true })
+      .post(
+        `${url}/transactions`,
+        { access_token },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
       .then((res) =>
         this.setState({
           transactions: res.data.transactions,
