@@ -1,14 +1,20 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "../components/Home";
-import Expenses from "../components/Expenses";
 
-const Routes = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/expenses" component={Expenses} />
-    {/* <Route path="/contacts" component={Contacts} /> */}
-  </Switch>
+const RouterContext = React.createContext(null);
+
+export const HookedBrowserRouter = ({ children, history }) => (
+  <Router history={history}>
+    <Route>
+      {(routeProps) => (
+        <RouterContext.Provider value={routeProps}>
+          {children}
+        </RouterContext.Provider>
+      )}
+    </Route>
+  </Router>
 );
 
-export default Routes;
+export function useRouter() {
+  return React.useContext(RouterContext);
+}

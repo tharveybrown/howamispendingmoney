@@ -21,9 +21,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <Link to="/login">Log In</Link>
-      <br></br>
-      <Link to="/signup">Sign Up</Link>
+      <h1>Home</h1>
 
       <br></br>
       {props.loggedInStatus ? (
@@ -43,7 +41,13 @@ const Home = (props) => {
             Connect a bank account
           </PlaidLink> */}
         </>
-      ) : null}
+      ) : (
+        <>
+          <Link to="/login">Log In</Link>
+          <br></br>
+          <Link to="/signup">Sign Up</Link>
+        </>
+      )}
     </div>
   );
 };

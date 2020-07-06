@@ -1,6 +1,6 @@
 // import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
@@ -62,12 +62,14 @@ class App extends Component {
     });
   };
   handleLogout = () => {
+    // let history = useHistory();
     localStorage.clear();
     // props.history.push("/");
     this.setState({
       isLoggedIn: false,
       user: {},
     });
+    // history.push("/login");
   };
 
   render() {
@@ -75,7 +77,10 @@ class App extends Component {
       <div>
         {/* <Routes props={this.props} /> */}
         <BrowserRouter>
-          <Navbar handleLogout={this.handleLogout} />
+          <Navbar
+            loggedInStatus={this.state.isLoggedIn}
+            handleLogout={this.handleLogout}
+          />
           <Switch>
             <Route exact path="/logout" handleLogout={this.handleLogout} />
             <Route
