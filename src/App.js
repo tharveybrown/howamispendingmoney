@@ -11,58 +11,6 @@ import runtimeEnv from "@mars/heroku-js-runtime-env";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
-// function App() {
-//   const [user, setUser] = useState({});
-//   const [form, setForm] = useState("");
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       axios
-//         .get(`${url}/auto_login`, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         })
-//         .then((resp) => resp.json())
-//         .then((data) => {
-//           setUser(data);
-//           // console.log(data)
-//         });
-//     }
-//   }, []);
-
-//   const handleLogin = (user) => {
-//     setUser(user);
-//   };
-
-//   const handleFormSwitch = (input) => {
-//     setForm(input);
-//   };
-
-//   console.log(user);
-
-//   const renderForm = () => {
-//     switch (form) {
-//       case "login":
-//         return <Login handleLogin={handleLogin} />;
-//         break;
-//       default:
-//         return <Signup handleLogin={handleLogin} />;
-//     }
-//   };
-//   return (
-//     <div className="App">
-//       {renderForm()}
-//       <button onClick={handleAuthClick} className="ui button">
-//         Access Authorized Route
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 class App extends Component {
   constructor(props) {
     super(props);

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import BankAuth from "./BankAuth";
+import Expenses from "./Expenses";
 // import { PlaidLink } from "react-plaid-link";
 
 const url = runtimeEnv().REACT_APP_API_URL;
@@ -31,6 +32,7 @@ const Home = (props) => {
             Log Out
           </Link>
           <BankAuth />
+          <Expenses />
           {/* <PlaidLink
             clientName="Your app name"
             env="sandbox"
