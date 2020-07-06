@@ -66,7 +66,7 @@ class BankAuth extends React.Component {
     return (
       <div>
         <PlaidLink
-          clientName="Your app name"
+          clientName="Donation tracker"
           env="sandbox"
           product={["auth", "transactions"]}
           publicKey={plaidPublicKey}

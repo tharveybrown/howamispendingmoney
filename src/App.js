@@ -4,64 +4,14 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
+import Expenses from "./components/Expenses";
 import Signup from "./components/registrations/Signup";
 import "./App.css";
 import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
+import Navbar from "./components/Navbar";
 
 const url = runtimeEnv().REACT_APP_API_URL;
-
-// function App() {
-//   const [user, setUser] = useState({});
-//   const [form, setForm] = useState("");
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       axios
-//         .get(`${url}/auto_login`, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         })
-//         .then((resp) => resp.json())
-//         .then((data) => {
-//           setUser(data);
-//           // console.log(data)
-//         });
-//     }
-//   }, []);
-
-//   const handleLogin = (user) => {
-//     setUser(user);
-//   };
-
-//   const handleFormSwitch = (input) => {
-//     setForm(input);
-//   };
-
-//   console.log(user);
-
-//   const renderForm = () => {
-//     switch (form) {
-//       case "login":
-//         return <Login handleLogin={handleLogin} />;
-//         break;
-//       default:
-//         return <Signup handleLogin={handleLogin} />;
-//     }
-//   };
-//   return (
-//     <div className="App">
-//       {renderForm()}
-//       <button onClick={handleAuthClick} className="ui button">
-//         Access Authorized Route
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default App;
 
 class App extends Component {
   constructor(props) {
@@ -113,6 +63,7 @@ class App extends Component {
   };
   handleLogout = () => {
     localStorage.clear();
+    // props.history.push("/");
     this.setState({
       isLoggedIn: false,
       user: {},
@@ -122,8 +73,11 @@ class App extends Component {
   render() {
     return (
       <div>
+        {/* <Routes props={this.props} /> */}
         <BrowserRouter>
+          <Navbar handleLogout={this.handleLogout} />
           <Switch>
+            <Route exact path="/logout" handleLogout={this.handleLogout} />
             <Route
               exact
               path="/"
@@ -157,6 +111,7 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path="/expenses" component={Expenses} />
           </Switch>
         </BrowserRouter>
       </div>
