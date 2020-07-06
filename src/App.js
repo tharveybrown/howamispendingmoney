@@ -4,10 +4,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
+import Expenses from "./components/Expenses";
 import Signup from "./components/registrations/Signup";
 import "./App.css";
 import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
+import Navbar from "./components/Navbar";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -61,6 +63,7 @@ class App extends Component {
   };
   handleLogout = () => {
     localStorage.clear();
+    // props.history.push("/");
     this.setState({
       isLoggedIn: false,
       user: {},
@@ -70,8 +73,11 @@ class App extends Component {
   render() {
     return (
       <div>
+        {/* <Routes props={this.props} /> */}
         <BrowserRouter>
+          <Navbar handleLogout={this.handleLogout} />
           <Switch>
+            <Route exact path="/logout" handleLogout={this.handleLogout} />
             <Route
               exact
               path="/"
@@ -105,6 +111,7 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path="/expenses" component={Expenses} />
           </Switch>
         </BrowserRouter>
       </div>

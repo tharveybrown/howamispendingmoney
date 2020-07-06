@@ -28,11 +28,11 @@ const Home = (props) => {
       <br></br>
       {props.loggedInStatus ? (
         <>
-          <Link to="/" onClick={handleClick}>
+          {/* <Link to="/" onClick={handleClick}>
             Log Out
-          </Link>
+          </Link> */}
           <BankAuth />
-          <Expenses />
+          {/* <Expenses /> */}
           {/* <PlaidLink
             clientName="Your app name"
             env="sandbox"
