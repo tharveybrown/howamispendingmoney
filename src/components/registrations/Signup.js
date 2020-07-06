@@ -42,9 +42,19 @@ class Signup extends Component {
     };
     // `${url}/logout`
     axios
-      .post(`${url}/users`, { user }, { withCredentials: true })
+      .post(
+        `${url}/users`,
+        { user },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      )
       .then((response) => {
-        if (response.data.status === "created") {
+        if (response.data.user) {
+          localStorage.setItem("token", response.data.jwt);
           this.props.handleLogin(response.data);
           this.redirect();
         } else {
