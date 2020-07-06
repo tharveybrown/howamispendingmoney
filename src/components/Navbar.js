@@ -1,38 +1,42 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import NavigationLink from "./NavigationLink";
 // import "../styles/navbar.css";
 
 const Navbar = ({ handleLogout, loggedInStatus }) => {
   console.log(loggedInStatus);
   return (
-    <nav className="navbar">
-      <NavLink
-        exact
-        activeClassName="navbar__link--active"
-        className="navbar__link"
-        to="/"
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-        Home
-      </NavLink>
-      {loggedInStatus ? (
-        <>
-          <NavLink
-            activeClassName="navbar__link--active"
-            className="navbar__link"
-            to="/expenses"
-          >
-            Expenses
-          </NavLink>
-          <NavLink
-            activeClassName="navbar__link--active"
-            className="navbar__link"
-            to="/login"
-            onClick={handleLogout}
-          >
-            Logout
-          </NavLink>
-        </>
-      ) : null}
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a className="navbar-brand" href="#">
+          smarter spending
+        </a>
+        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+          <NavigationLink link="/" text="Home" />
+
+          {loggedInStatus ? (
+            <>
+              <NavigationLink link="/expenses" text="Expenses" />
+              <NavigationLink
+                link="/login"
+                text="Logout"
+                handleLogout={handleLogout}
+              />
+            </>
+          ) : null}
+        </ul>
+      </div>
     </nav>
   );
 };
