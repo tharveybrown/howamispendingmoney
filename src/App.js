@@ -35,7 +35,7 @@ class App extends Component {
         },
       })
       .then((resp) => resp.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log("APP DATA", data));
   };
 
   useEffect = () => {
@@ -56,7 +56,7 @@ class App extends Component {
   };
 
   handleLogin = (data) => {
-    console.log(data);
+    console.log("Login data", data);
     this.setState({
       isLoggedIn: true,
       user: data,

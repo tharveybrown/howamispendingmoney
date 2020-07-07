@@ -1,22 +1,31 @@
 import React from "react";
 
 const SelectBox = (props) => {
-  const { placeholder, type, name, handleChange, id, value } = props;
+  const { type, name, handleChange, id } = props;
   return (
     <div className="form-label-group">
-      <select
+      <input
         // placeholder={placeholder}
-        // type={type}
-        // name={name}
-        // value={value}
+        type={type}
+        name={name}
+        value={true}
         className="form-control"
         onChange={handleChange}
-        // id={id}
-        // required
-      >
-        <option value={true}>Yes</option>
-        <option value={false}>No</option>
-      </select>
+        id={id}
+        required
+      />
+      Yes
+      <input
+        // placeholder={placeholder}
+        type={type}
+        name={name}
+        value={false}
+        className="form-control"
+        onChange={handleChange}
+        id={id}
+        required
+      />
+      No
     </div>
   );
 };

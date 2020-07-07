@@ -8,7 +8,7 @@ const url = env.REACT_APP_API_URL;
 const plaidPublicKey = env.REACT_APP_PLAID_PUBLIC_KEY;
 
 // const { plaidPublicKey } = process.env.PLAID_PUBLIC_KEY;
-console.log(env);
+console.log("env", env);
 // console.log(plaidPublicKey);
 
 class BankAuth extends React.Component {

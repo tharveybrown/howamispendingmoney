@@ -16,9 +16,9 @@ class NewExpense extends Component {
       amount: 0,
       date: date,
       category: "",
+      schedule: "",
       recurring: false,
       donation: false,
-      schedule: "",
       errors: [],
     };
   }
@@ -37,15 +37,16 @@ class NewExpense extends Component {
       amount,
       date,
       category,
-      recurring,
       schedule,
+      recurring,
       donation,
+      id,
     } = this.state;
     const token = localStorage.getItem("token");
     axios
       .post(
         `${url}/expenses`,
-        { name, amount, date, category, recurring, schedule, donation },
+        { name, amount, date, category, schedule, recurring, donation, id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -56,7 +57,6 @@ class NewExpense extends Component {
       )
       .then((resp) => resp.data)
       .then((data) => {
-        // debugger;
         this.props.handleLogin(data.user);
         this.redirect();
       })
@@ -72,7 +72,6 @@ class NewExpense extends Component {
   };
 
   handleErrors = () => {
-    console.log("ERRORS:", this.state.errors);
     return (
       <div>
         <ul>
@@ -90,8 +89,8 @@ class NewExpense extends Component {
       amount,
       date,
       category,
-      recurring,
       schedule,
+      recurring,
       donation,
     } = this.state;
     return (
@@ -106,7 +105,7 @@ class NewExpense extends Component {
                     placeholder="Company/ Organization Name"
                     type="text"
                     handleChange={this.handleChange}
-                    // id="inputName"
+                    id="inputName"
                     name="name"
                     value={name}
                   />
@@ -121,6 +120,7 @@ class NewExpense extends Component {
                     placeholder="Date"
                     type="date"
                     handleChange={this.handleChange}
+                    id="inputDate"
                     name="date"
                     value={date}
                   />
@@ -128,30 +128,32 @@ class NewExpense extends Component {
                     placeholder="Expense Category"
                     type="category"
                     handleChange={this.handleChange}
+                    id="inputCategory"
                     name="category"
                     value={category}
                   />
-                  Is this a recurring expense?
-                  <SelectBox
-                    type="recurring"
-                    handleChange={this.handleChange}
-                    name="recurring"
-                    value={donation}
-                  ></SelectBox>
-                  Is this a Donation?
-                  <SelectBox
-                    type="donation"
-                    onChange={this.handleChange}
-                    name="donation"
-                    value={donation}
-                  ></SelectBox>
                   <Input
                     placeholder="Schedule"
                     type="schedule"
-                    onChange={this.handleChange}
+                    handleChange={this.handleChange}
+                    id="inputSchedule"
                     name="schedule"
                     value={schedule}
                   />
+                  Is this a recurring expense?
+                  <SelectBox
+                    type="radio"
+                    handleChange={this.handleChange}
+                    name="recurring"
+                    value={recurring}
+                  ></SelectBox>
+                  Is this a Donation?
+                  <SelectBox
+                    type="radio"
+                    handleChange={this.handleChange}
+                    name="donation"
+                    value={donation}
+                  ></SelectBox>
                   <button
                     placeholder="submit"
                     className="btn btn-primary btn-block text-uppercase"
