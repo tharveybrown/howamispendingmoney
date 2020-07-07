@@ -64,6 +64,7 @@ function dateFormatter(cell) {
   return `${da}-${mo}-${ye}`;
 }
 function priceFormatter(cell, row) {
+  console.log(row);
   if (cell < 0) {
     return (
       <span>

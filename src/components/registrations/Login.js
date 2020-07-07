@@ -44,15 +44,24 @@ class Login extends Component {
       )
       .then((resp) => resp.data)
       .then((data) => {
-        localStorage.setItem("token", data.jwt);
-        this.props.handleLogin(data.user);
-        this.redirect();
+        if (data.jwt) {
+          localStorage.setItem("token", data.jwt);
+          this.props.handleLogin(data.user);
+          this.redirect();
+        } else
+          this.setState({
+            errors: data.errors,
+          });
       })
       .catch((error) => {
         console.log("api errors:", error);
-        this.setState({
-          errors: error,
-        });
+        // let previousErrors = this.state.errors
+
+        // this.setState((previousState) => {
+        //   return {
+        //     errors: [...previousState.errors, error],
+        //   };
+        // });
       });
   };
   redirect = () => {
