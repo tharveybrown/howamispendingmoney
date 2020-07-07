@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
 import Expenses from "./components/Expenses";
+import NewExpense from "./components/NewExpense";
 import Signup from "./components/registrations/Signup";
 import "./App.css";
 import "./index.css";
@@ -35,7 +36,7 @@ class App extends Component {
         },
       })
       .then((resp) => resp.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log("APP DATA", data));
   };
 
   useEffect = () => {
@@ -57,7 +58,7 @@ class App extends Component {
   };
 
   handleLogin = (data) => {
-    console.log(data);
+    console.log("Login data", data);
     this.setState({
       isLoggedIn: true,
       user: data,
@@ -118,7 +119,22 @@ class App extends Component {
                 />
               )}
             />
+<<<<<<< HEAD
             {/* <Route exact path="/expenses" component={Expenses} /> */}
+=======
+            <Route exact path="/expenses" component={Expenses} />
+            <Route
+              exact
+              path="/new"
+              render={(props) => (
+                <NewExpense
+                  {...props}
+                  handleLogin={this.handleLogin}
+                  loggedInStatus={this.state.isLoggedIn}
+                />
+              )}
+            />
+>>>>>>> master
           </Switch>
         </BrowserRouter>
       </div>

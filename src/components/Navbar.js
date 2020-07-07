@@ -4,6 +4,7 @@ import NavigationLink from "./NavigationLink";
 
 // import "../styles/navbar.css";
 
+<<<<<<< HEAD
 const Navbar = ({ handleLogout, loggedInStatus }) => {
   console.log(loggedInStatus);
   return (
@@ -41,5 +42,49 @@ const Navbar = ({ handleLogout, loggedInStatus }) => {
     </nav>
   );
 };
+=======
+const Navbar = ({ handleLogout }) => (
+  <nav className="navbar">
+    <NavLink
+      exact
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/"
+    >
+      Home
+    </NavLink>
+    <NavLink
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/expenses"
+    >
+      Expenses
+    </NavLink>
+    <NavLink
+      exact
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/new"
+    >
+      New Expense
+    </NavLink>
+    <NavLink
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/logout"
+      onClick={handleLogout}
+    >
+      Logout
+    </NavLink>
+    {/* <NavLink
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/contacts"
+    >
+      Contacts
+    </NavLink> */}
+  </nav>
+);
+>>>>>>> master
 
 export default Navbar;
