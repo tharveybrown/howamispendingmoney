@@ -6,13 +6,7 @@ import { PlaidLink } from "react-plaid-link";
 let env = runtimeEnv();
 const plaidPublicKey = env.REACT_APP_PLAID_PUBLIC_KEY;
 
-<<<<<<< HEAD
 console.log(env);
-=======
-// const { plaidPublicKey } = process.env.PLAID_PUBLIC_KEY;
-console.log("env", env);
-// console.log(plaidPublicKey);
->>>>>>> master
 
 const BankAuth = (props) => {
   return (

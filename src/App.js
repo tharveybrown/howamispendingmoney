@@ -119,10 +119,7 @@ class App extends Component {
                 />
               )}
             />
-<<<<<<< HEAD
             {/* <Route exact path="/expenses" component={Expenses} /> */}
-=======
-            <Route exact path="/expenses" component={Expenses} />
             <Route
               exact
               path="/new"
@@ -134,7 +131,6 @@ class App extends Component {
                 />
               )}
             />
->>>>>>> master
           </Switch>
         </BrowserRouter>
       </div>
