@@ -1,7 +1,7 @@
 import React from "react";
 
 const Expense = ({ expense }) => {
-  console.log(expense);
+  console.log("EXPENSE", expense);
   return (
     <div>
       <h4>{expense.amount}</h4>
