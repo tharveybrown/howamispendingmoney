@@ -12,6 +12,7 @@ class Home extends Component {
     super(props);
     this.state = {
       expenses: [],
+      errors: [],
     };
   }
 
@@ -75,7 +76,33 @@ class Home extends Component {
   };
 
   updateExpenses = (expense) => {
+    const authToken = localStorage.getItem("token");
     console.log(expense);
+    let config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+
+    axios
+      .patch(`${url}/expenses/${expense.id}`, expense, config)
+      .then((res) => {
+        const elementsIndex = this.state.expense.findIndex(
+          (element) => element.id == res.data.id
+        );
+        let previousState = [...this.state.expenses];
+        previousState[elementsIndex] = res.data;
+        return this.setState({
+          expenses: previousState,
+        });
+      })
+      .catch((err) =>
+        this.setState((previousState) => {
+          return {
+            errors: [...previousState.errors, err],
+          };
+        })
+      );
   };
 
   render() {

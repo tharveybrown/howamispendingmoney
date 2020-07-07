@@ -77,8 +77,6 @@ function priceFormatter(cell, row) {
 
 const Expenses = ({ expenses, onEdit }) => {
   function afterSaveCell(oldValue, newValue, row, column, done) {
-    console.log("SAVED");
-    console.log(newValue);
     onEdit(row);
   }
   console.log(expenses);
