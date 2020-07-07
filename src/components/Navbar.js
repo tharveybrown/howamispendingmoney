@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import NavigationLink from "./NavigationLink";
+
 // import "../styles/navbar.css";
 
 const Navbar = ({ handleLogout, loggedInStatus }) => {
@@ -27,7 +28,7 @@ const Navbar = ({ handleLogout, loggedInStatus }) => {
 
           {loggedInStatus ? (
             <>
-              <NavigationLink link="/expenses" text="Expenses" />
+              {/* <NavigationLink link="/expenses" text="Expenses" /> */}
               <NavigationLink
                 link="/login"
                 text="Logout"

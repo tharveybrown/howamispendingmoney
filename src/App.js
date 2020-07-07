@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       user: {},
+      expenses: [],
     };
   }
   componentDidMount() {
@@ -116,7 +117,7 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/expenses" component={Expenses} />
+            {/* <Route exact path="/expenses" component={Expenses} /> */}
           </Switch>
         </BrowserRouter>
       </div>
