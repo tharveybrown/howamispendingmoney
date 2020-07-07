@@ -18,17 +18,19 @@ class Home extends Component {
 
   componentDidMount() {
     const authToken = localStorage.getItem("token");
-    axios
-      .get(`${url}/expenses`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-      .then((response) => {
-        console.log("RESPONSE", response);
-        return this.setState({ expenses: response.data });
-      })
-      .catch((err) => console.log(err));
+    if (authToken) {
+      axios
+        .get(`${url}/expenses`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((response) => {
+          console.log("RESPONSE", response);
+          return this.setState({ expenses: response.data });
+        })
+        .catch((err) => console.log(err));
+    }
   }
   onSuccess = (token, metadata) => {
     const authToken = localStorage.getItem("token");

@@ -29,12 +29,12 @@ const Navbar = ({ handleLogout, loggedInStatus }) => {
           {loggedInStatus ? (
             <>
               {/* <NavigationLink link="/expenses" text="Expenses" /> */}
+              <NavigationLink link="/new" text="New Expense" />
               <NavigationLink
                 link="/login"
                 text="Logout"
                 handleLogout={handleLogout}
               />
-              <NavigationLink link="/new">New Expense</NavigationLink>
             </>
           ) : null}
         </ul>
