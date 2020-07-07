@@ -20,6 +20,14 @@ const Navbar = ({ handleLogout }) => (
       Expenses
     </NavLink>
     <NavLink
+      exact
+      activeClassName="navbar__link--active"
+      className="navbar__link"
+      to="/new"
+    >
+      New Expense
+    </NavLink>
+    <NavLink
       activeClassName="navbar__link--active"
       className="navbar__link"
       to="/logout"
