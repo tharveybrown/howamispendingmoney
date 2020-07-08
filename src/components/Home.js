@@ -46,7 +46,9 @@ class Home extends Component {
             }, {})
           );
 
-          let purchasesOnly = response.data.filter((exp) => !exp.donation);
+          let purchasesOnly = response.data.filter(
+            (exp) => !exp.donation && exp.amount < 0
+          );
 
           let purchases = Object.values(
             purchasesOnly.reduce((a, { date, amount }) => {
