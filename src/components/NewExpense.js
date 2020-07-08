@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from "./registrations/Input";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import axios from "axios";
-import SelectBox from "./SelectBox";
+import RadioBox from "./RadioBox";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -132,28 +132,28 @@ class NewExpense extends Component {
                     name="category"
                     value={category}
                   />
+                  Is this a Donation?
+                  <RadioBox
+                    type="radio"
+                    handleChange={this.handleChange}
+                    name="donation"
+                    value={donation}
+                  ></RadioBox>
+                  Is this a recurring expense?
+                  <RadioBox
+                    type="radio"
+                    handleChange={this.handleChange}
+                    name="recurring"
+                    value={recurring}
+                  ></RadioBox>
                   <Input
-                    placeholder="Schedule"
+                    placeholder="How often does this expense occur?"
                     type="schedule"
                     handleChange={this.handleChange}
                     id="inputSchedule"
                     name="schedule"
                     value={schedule}
                   />
-                  Is this a recurring expense?
-                  <SelectBox
-                    type="radio"
-                    handleChange={this.handleChange}
-                    name="recurring"
-                    value={recurring}
-                  ></SelectBox>
-                  Is this a Donation?
-                  <SelectBox
-                    type="radio"
-                    handleChange={this.handleChange}
-                    name="donation"
-                    value={donation}
-                  ></SelectBox>
                   <button
                     placeholder="submit"
                     className="btn btn-primary btn-block text-uppercase"

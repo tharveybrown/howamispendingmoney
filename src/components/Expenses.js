@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
-import filterFactory, { dateFilter } from "react-bootstrap-table2-filter";
+import filterFactory, {
+  dateFilter,
+  selectFilter,
+} from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 
 const columns = [
@@ -33,6 +36,7 @@ const columns = [
   {
     dataField: "donation",
     text: "Donation",
+    sort: true,
     formatter: (cellContent, row) => {
       if (cellContent) {
         return <span className="badge badge-primary"> TRUE </span>;
