@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import BankAuth from "./BankAuth";
 import Expenses from "./Expenses";
+import Summary from "./Summary";
+
 import axios from "axios";
 
 const url = runtimeEnv().REACT_APP_API_URL;
@@ -11,7 +13,13 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      spent: 0,
+      donated: 0,
+      income: 0,
+      total: 0,
       expenses: [],
+      purchases: [],
+      donations: [],
       errors: [],
     };
   }
@@ -27,7 +35,49 @@ class Home extends Component {
         })
         .then((response) => {
           console.log("RESPONSE", response);
-          return this.setState({ expenses: response.data });
+          let donationsOnly = response.data.filter((exp) => exp.donation);
+
+          let donations = Object.values(
+            donationsOnly.reduce((a, { date, amount }) => {
+              a[date] = a[date] || { date, amount: 0 };
+              a[date].amount = String(Number(a[date].amount) + Number(amount));
+
+              return a;
+            }, {})
+          );
+
+          let purchasesOnly = response.data.filter((exp) => !exp.donation);
+
+          let purchases = Object.values(
+            purchasesOnly.reduce((a, { date, amount }) => {
+              a[date] = a[date] || { date, amount: 0 };
+              a[date].amount = String(Number(a[date].amount) + Number(amount));
+
+              return a;
+            }, {})
+          );
+
+          let currentDonated = donationsOnly
+            .map((d) => d.amount)
+            .reduce((a, b) => a + b);
+          let currentSpent = purchasesOnly
+            .map((d) => d.amount)
+            .reduce((a, b) => a + b);
+          let currentIncome = response.data
+            .filter((exp) => exp.amount > 0)
+            .map((exp) => exp.amount)
+            .reduce((sum, val) => sum + val, this.state.income);
+          let currentTotal = currentIncome + currentDonated + currentSpent;
+
+          return this.setState({
+            expenses: response.data,
+            purchases: purchases,
+            donations: donations,
+            spent: Math.round(currentSpent * 100) / 100,
+            total: Math.round(currentTotal * 100) / 100,
+            income: Math.round(currentIncome * 100) / 100,
+            donated: Math.round(currentDonated * 100) / 100,
+          });
         })
         .catch((err) => console.log(err));
     }
@@ -109,18 +159,30 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Home</h1>
-
+      <div className="layout">
         <br></br>
         {this.props.loggedInStatus ? (
-          <>
-            <BankAuth onSuccess={this.onSuccess} />
-            <Expenses
-              expenses={this.state.expenses}
-              onEdit={this.updateExpenses}
-            />
-          </>
+          <div className="show_transactions transactions_two_columns">
+            <div className="transactions_aside">
+              {this.state.expenses.length > 0 ? (
+                <Summary
+                  donations={this.state.donations}
+                  purchases={this.state.purchases}
+                  donated={this.state.donated}
+                  income={this.state.income}
+                  spent={this.state.spent}
+                  total={this.state.total}
+                />
+              ) : null}
+            </div>
+            <div className="layout_noscroll">
+              <BankAuth onSuccess={this.onSuccess} />
+              <Expenses
+                expenses={this.state.expenses}
+                onEdit={this.updateExpenses}
+              />
+            </div>
+          </div>
         ) : (
           <>
             <Link to="/login">Log In</Link>
