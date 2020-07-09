@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Input from "./registrations/Input";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import axios from "axios";
+import $ from "jquery";
 import RadioBox from "./RadioBox";
 
 const url = runtimeEnv().REACT_APP_API_URL;
@@ -9,8 +10,8 @@ const url = runtimeEnv().REACT_APP_API_URL;
 let date = new Date();
 
 class NewExpense extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       name: "",
       amount: 0,
@@ -31,6 +32,7 @@ class NewExpense extends Component {
   };
 
   handleSubmit = (event) => {
+    console.log("SUBMIT HAPPEND", event);
     event.preventDefault();
     const {
       name,
@@ -55,16 +57,15 @@ class NewExpense extends Component {
           },
         }
       )
-      .then((resp) => resp.data)
-      .then((data) => {
-        this.props.handleLogin(data.user);
-        this.redirect();
+      .then((res) => {
+        this.props.updateExpenseState(res.data);
+        let modal = document.querySelector('[data-dismiss="modal"]');
+        modal.click();
+        return;
       })
+
       .catch((error) => {
         console.log("api errors:", error);
-        this.setState({
-          errors: error,
-        });
       });
   };
   redirect = () => {
@@ -94,12 +95,40 @@ class NewExpense extends Component {
       donation,
     } = this.state;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                <h5 className="card-title text-center">Create a New Expense</h5>
+      <>
+        <button
+          type="button"
+          class="btn btn-primary col-4"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          New Expense
+        </button>
+
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  New Expense
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
                 <form className="form-signin" onSubmit={this.handleSubmit}>
                   <Input
                     placeholder="Company/ Organization Name"
@@ -132,19 +161,22 @@ class NewExpense extends Component {
                     name="category"
                     value={category}
                   />
-                  Is this a Donation?
+                  {/* Is this a Donation? */}
                   <RadioBox
+                    header="Is this a donation?"
                     type="radio"
                     handleChange={this.handleChange}
                     name="donation"
                     value={donation}
+                    options={["yes", "no"]}
                   ></RadioBox>
-                  Is this a recurring expense?
                   <RadioBox
+                    header="Is this a recurring expense?"
                     type="radio"
                     handleChange={this.handleChange}
                     name="recurring"
                     value={recurring}
+                    options={["yes", "no"]}
                   ></RadioBox>
                   <Input
                     placeholder="How often does this expense occur?"
@@ -158,17 +190,101 @@ class NewExpense extends Component {
                     placeholder="submit"
                     className="btn btn-primary btn-block text-uppercase"
                     type="submit"
+                    onSubmit={this.handleSubmit}
+                    // data-dismiss="modal"
                   >
                     Create New Expense
                   </button>
                 </form>
                 <div>{this.state.errors ? this.handleErrors() : null}</div>
               </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
+    // <div className="container">
+    //   <div className="row">
+    //     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    //       <div className="card card-signin my-5">
+    //         <div className="card-body">
+    //           <h5 className="card-title text-center">Create a New Expense</h5>
+    //           <form className="form-signin" onSubmit={this.handleSubmit}>
+    //             <Input
+    //               placeholder="Company/ Organization Name"
+    //               type="text"
+    //               handleChange={this.handleChange}
+    //               id="inputName"
+    //               name="name"
+    //               value={name}
+    //             />
+    //             <Input
+    //               placeholder="Amount"
+    //               type="amount"
+    //               handleChange={this.handleChange}
+    //               name="amount"
+    //               value={amount}
+    //             />
+    //             <Input
+    //               placeholder="Date"
+    //               type="date"
+    //               handleChange={this.handleChange}
+    //               id="inputDate"
+    //               name="date"
+    //               value={date}
+    //             />
+    //             <Input
+    //               placeholder="Expense Category"
+    //               type="category"
+    //               handleChange={this.handleChange}
+    //               id="inputCategory"
+    //               name="category"
+    //               value={category}
+    //             />
+    //             {/* Is this a Donation? */}
+    //             <RadioBox
+    //               header="Is this a donation?"
+    //               type="radio"
+    //               handleChange={this.handleChange}
+    //               name="donation"
+    //               value={donation}
+    //               options={["yes", "no"]}
+    //             ></RadioBox>
+    //             <RadioBox
+    //               header="Is this a recurring expense?"
+    //               type="radio"
+    //               handleChange={this.handleChange}
+    //               name="recurring"
+    //               value={recurring}
+    //               options={["yes", "no"]}
+    //             ></RadioBox>
+    //             <Input
+    //               placeholder="How often does this expense occur?"
+    //               type="schedule"
+    //               handleChange={this.handleChange}
+    //               id="inputSchedule"
+    //               name="schedule"
+    //               value={schedule}
+    //             />
+    //             <button
+    //               placeholder="submit"
+    //               className="btn btn-primary btn-block text-uppercase"
+    //               type="submit"
+    //             >
+    //               Create New Expense
+    //             </button>
+    //           </form>
+    //           <div>{this.state.errors ? this.handleErrors() : null}</div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   }
 }
 
