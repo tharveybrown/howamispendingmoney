@@ -28,30 +28,6 @@ const RadioBox = (props) => {
         })}
       </RadioGroup>
     </FormControl>
-    // <div className="form-label-group">
-    //   <input
-    //     // placeholder={placeholder}
-    //     type={type}
-    //     name={name}
-    //     value={true}
-    //     className="form-control"
-    //     onChange={handleChange}
-    //     id={id}
-    //     required
-    //   />
-    //   Yes
-    //   <input
-    //     // placeholder={placeholder}
-    //     type={type}
-    //     name={name}
-    //     value={false}
-    //     className="form-control"
-    //     onChange={handleChange}
-    //     id={id}
-    //     required
-    //   />
-    //   No
-    // </div>
   );
 };
 

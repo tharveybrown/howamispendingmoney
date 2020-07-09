@@ -214,11 +214,12 @@ class Home extends Component {
                     </div>
                   </div>
                 </div>
-
+                {/* {this.state.expenses.length > 0 ? ( */}
                 <Expenses
                   expenses={this.state.expenses}
                   onEdit={this.updateExpenses}
                 />
+                {/* ) : null} */}
               </div>
             </div>
           ) : (

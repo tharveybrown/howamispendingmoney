@@ -4,6 +4,7 @@ import runtimeEnv from "@mars/heroku-js-runtime-env";
 import axios from "axios";
 import $ from "jquery";
 import RadioBox from "./RadioBox";
+import Switch from "./Switch";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -20,6 +21,7 @@ class NewExpense extends Component {
       schedule: "",
       recurring: false,
       donation: false,
+      isIncome: false,
       errors: [],
     };
   }
@@ -30,10 +32,13 @@ class NewExpense extends Component {
       [name]: value,
     });
   };
+  handleToggle = (event) => {
+    this.setState({ ...this.state, [event.target.name]: event.target.checked });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const {
+    let {
       name,
       amount,
       date,
@@ -42,8 +47,11 @@ class NewExpense extends Component {
       recurring,
       donation,
       id,
+      isIncome,
     } = this.state;
     const token = localStorage.getItem("token");
+
+    amount = !isIncome ? amount * -1 : amount;
     axios
       .post(
         `${url}/expenses`,
@@ -92,6 +100,7 @@ class NewExpense extends Component {
       schedule,
       recurring,
       donation,
+      isIncome,
     } = this.state;
     return (
       <>
@@ -129,13 +138,21 @@ class NewExpense extends Component {
               </div>
               <div class="modal-body">
                 <form className="form-signin" onSubmit={this.handleSubmit}>
+                  <Switch
+                    handleChange={this.handleToggle}
+                    id="isIncome"
+                    name="isIncome"
+                    value={isIncome}
+                    label="Income"
+                  />
                   <Input
-                    placeholder="Company/ Organization Name"
+                    placeholder="Company / Organization Name"
                     type="text"
                     handleChange={this.handleChange}
                     id="inputName"
                     name="name"
                     value={name}
+                    required={true}
                   />
                   <Input
                     placeholder="Amount"
@@ -143,6 +160,7 @@ class NewExpense extends Component {
                     handleChange={this.handleChange}
                     name="amount"
                     value={amount}
+                    required={true}
                   />
                   <Input
                     placeholder="Date"
@@ -184,6 +202,7 @@ class NewExpense extends Component {
                     id="inputSchedule"
                     name="schedule"
                     value={schedule}
+                    required={false}
                   />
                   <button
                     placeholder="submit"
