@@ -23,6 +23,16 @@ button {
   .table:hover::after {
     color: ${({ theme }) => theme.hover} !important;
   }
+  .table thead th {
+    
+    border-bottom: 2px solid ${({ theme }) => theme.body} !important;
+   
+  }
+
+
+  .table-bordered th, .table-bordered td {
+      border: 1px solid ${({ theme }) => theme.body} !important;
+  }
   .card {
     background: ${({ theme }) => theme.card} ;
     color: ${({ theme }) => theme.cardText} !important;
