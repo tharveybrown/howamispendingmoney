@@ -32,7 +32,6 @@ class NewExpense extends Component {
   };
 
   handleSubmit = (event) => {
-    console.log("SUBMIT HAPPEND", event);
     event.preventDefault();
     const {
       name,
