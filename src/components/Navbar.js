@@ -30,7 +30,7 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
 
           {loggedInStatus ? (
             <>
-              {/* <NavigationLink link="/expenses" text="Expenses" /> */}
+              <NavigationLink link="/resources" text="Resources" />
 
               <NavigationLink
                 link="/login"

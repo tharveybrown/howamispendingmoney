@@ -13,6 +13,7 @@ import "./App.css";
 // import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import Navbar from "./components/Navbar";
+import ResourcesContainer from "./components/resources/ResourcesContainer";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -135,6 +136,18 @@ class App extends Component {
                 path="/new"
                 render={(props) => (
                   <NewExpense
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path="/resources"
+                render={(props) => (
+                  <ResourcesContainer
                     {...props}
                     handleLogin={this.handleLogin}
                     loggedInStatus={this.state.isLoggedIn}

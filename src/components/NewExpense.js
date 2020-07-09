@@ -195,6 +195,10 @@ class NewExpense extends Component {
                     value={recurring}
                     options={["yes", "no"]}
                   ></RadioBox>
+                  {/* <ExpenseSelect 
+                    handleChange={this.handleChange}
+                    value={category} >
+                    </ExpenseSelect> */}
                   <Input
                     placeholder="How often does this expense occur?"
                     type="schedule"
