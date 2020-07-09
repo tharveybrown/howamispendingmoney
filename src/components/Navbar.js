@@ -1,13 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import NavigationLink from "./NavigationLink";
+import Toggle from "./Toggle";
 
 // import "../styles/navbar.css";
 
-const Navbar = ({ handleLogout, loggedInStatus }) => {
+const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
   console.log(loggedInStatus);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav
+      className="navbar navbar-expand-lg navbar-light"
+      style={{ background: "#FFE973" }}
+      // style={{background-color: '#FFE973'}}
+    >
       <button
         className="navbar-toggler"
         type="button"
@@ -38,6 +43,9 @@ const Navbar = ({ handleLogout, loggedInStatus }) => {
             </>
           ) : null}
         </ul>
+        <Toggle toggleTheme={toggleTheme} theme={theme}>
+          Toggle theme
+        </Toggle>
       </div>
     </nav>
   );

@@ -14,12 +14,12 @@ const legend = {
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   legend: {
     position: "top",
   },
   elements: {
     line: {
-      // A higher value makes the line look skewed at this ratio.
       tension: 0.3,
     },
     point: {
@@ -30,26 +30,6 @@ const options = {
     xAxes: [
       {
         gridLines: false,
-        // ticks: {
-        //   callback(tick, index) {
-        //     // Jump every 7 values on the X axis labels to avoid clutter.
-        //     return index % 7 !== 0 ? "" : tick;
-        //   },
-        // },
-      },
-    ],
-    yAxes: [
-      {
-        ticks: {
-          suggestedMax: 45,
-          callback(tick) {
-            if (tick === 0) {
-              return tick;
-            }
-            // Format the amounts using Ks for thousands.
-            return tick > 999 ? `${(tick / 1000).toFixed(1)}K` : tick;
-          },
-        },
       },
     ],
   },
@@ -73,24 +53,57 @@ export default class ExpenseChart extends React.Component {
   }
 
   componentDidMount() {
-    console.log("PURCHASES", this.props);
-    // debugger;
+    const sortDates = (a, b) => {
+      var keyA = new Date(a.date),
+        keyB = new Date(b.date);
+      // Compare the 2 dates
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    };
     const data = {
       // Todo: need to map expense to date
-      labels: this.props.purchases.map((p) => p.date.split("T")[0]),
+      labels: this.props.purchases
+        .sort((a, b) => {
+          var keyA = new Date(a.date),
+            keyB = new Date(b.date);
+          // Compare the 2 dates
+          if (keyA < keyB) return -1;
+          if (keyA > keyB) return 1;
+          return 0;
+        })
+        .map((p) => p.date.split("T")[0]),
+      attrs: { md: "6", sm: "6" },
       datasets: [
         {
           label: "Donations",
-          data: this.props.donations.map((d) => d.amount),
-          fill: true,
-          backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "rgba(75,192,192,1)",
+          data: this.props.donations
+            .sort((a, b) => sortDates(a, b))
+            .map((d) => -1 * d.amount),
+          fill: "start",
+          backgroundColor: "rgba(0,123,255,0.1)",
+          borderColor: "rgba(0,123,255,1)",
+          pointBackgroundColor: "#ffffff",
+          pointHoverBackgroundColor: "rgb(0,123,255)",
+          borderWidth: 1.5,
+          pointRadius: 0,
+          pointHoverRadius: 3,
         },
         {
           label: "Purchases",
-          data: this.props.purchases.map((p) => p.amount),
-          fill: false,
-          borderColor: "#742774",
+          data: this.props.purchases
+            .sort((a, b) => sortDates(a, b))
+            .map((p) => -1 * p.amount),
+          fill: "start",
+          backgroundColor: "rgba(255,65,105,0.1)",
+          borderColor: "rgba(255,65,105,1)",
+          pointBackgroundColor: "#ffffff",
+          pointHoverBackgroundColor: "rgba(255,65,105,1)",
+          borderDash: [3, 3],
+          borderWidth: 1,
+          pointRadius: 0,
+          pointHoverRadius: 2,
+          pointBorderColor: "rgba(255,65,105,1)",
         },
       ],
     };
@@ -102,8 +115,8 @@ export default class ExpenseChart extends React.Component {
     return (
       <div className="">
         <Line
-          width="600"
-          height="300"
+          width={500}
+          height={300}
           data={this.state.chartData}
           legend={legend}
           options={options}

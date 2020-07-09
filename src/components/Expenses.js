@@ -7,7 +7,6 @@ import filterFactory, {
 } from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 import paginationFactory from "react-bootstrap-table2-paginator";
-// import MaterialForm from "./MaterialForm";
 
 const columns = [
   {
@@ -70,7 +69,6 @@ function dateFormatter(cell) {
   return `${da}-${mo}-${ye}`;
 }
 function priceFormatter(cell, row) {
-  console.log(row);
   if (cell < 0) {
     return (
       <span>
@@ -86,12 +84,12 @@ const Expenses = ({ expenses, onEdit }) => {
   function afterSaveCell(oldValue, newValue, row, column, done) {
     onEdit(row);
   }
-  console.log(expenses);
 
   return (
     <>
       {/* <MaterialForm /> */}
       <BootstrapTable
+        color="primary.main"
         striped
         hover
         keyField="id"

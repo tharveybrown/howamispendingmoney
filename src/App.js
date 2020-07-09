@@ -4,11 +4,13 @@ import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
-import Expenses from "./components/Expenses";
 import NewExpense from "./components/NewExpense";
 import Signup from "./components/registrations/Signup";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./theme";
+import { GlobalStyles } from "./global";
 import "./App.css";
-import "./index.css";
+// import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import Navbar from "./components/Navbar";
 
@@ -21,6 +23,7 @@ class App extends Component {
       isLoggedIn: false,
       user: {},
       expenses: [],
+      theme: "light",
     };
   }
   componentDidMount() {
@@ -75,66 +78,83 @@ class App extends Component {
     // history.push("/login");
   };
 
+  toggleTheme = () => {
+    // if the theme is not light, then set it to dark
+    if (this.state.theme === "light") {
+      this.setState({ theme: "dark" });
+      // otherwise, it should be light
+    } else {
+      this.setState({ theme: "light" });
+    }
+  };
+
   render() {
     return (
-      <div>
-        {/* <Routes props={this.props} /> */}
-        <BrowserRouter>
-          <Navbar
-            loggedInStatus={this.state.isLoggedIn}
-            handleLogout={this.handleLogout}
-          />
-          <Switch>
-            <Route exact path="/logout" handleLogout={this.handleLogout} />
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Home
-                  {...props}
-                  handleLogout={this.handleLogout}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
-              )}
+      <ThemeProvider
+        theme={this.state.theme === "light" ? lightTheme : darkTheme}
+      >
+        <>
+          <GlobalStyles />
+          <BrowserRouter>
+            <Navbar
+              theme={this.state.theme}
+              toggleTheme={this.toggleTheme}
+              loggedInStatus={this.state.isLoggedIn}
+              handleLogout={this.handleLogout}
             />
-            <Route
-              exact
-              path="/login"
-              render={(props) => (
-                <Login
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={(props) => (
-                <Signup
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
-              )}
-            />
-            {/* <Route exact path="/expenses" component={Expenses} /> */}
-            <Route
-              exact
-              path="/new"
-              render={(props) => (
-                <NewExpense
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
-              )}
-            />
-          </Switch>
-        </BrowserRouter>
-      </div>
+            <Switch>
+              <Route exact path="/logout" handleLogout={this.handleLogout} />
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <Home
+                    {...props}
+                    handleLogout={this.handleLogout}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/login"
+                render={(props) => (
+                  <Login
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/signup"
+                render={(props) => (
+                  <Signup
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                )}
+              />
+              {/* <Route exact path="/expenses" component={Expenses} /> */}
+              <Route
+                exact
+                path="/new"
+                render={(props) => (
+                  <NewExpense
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                )}
+              />
+            </Switch>
+          </BrowserRouter>
+        </>
+      </ThemeProvider>
     );
   }
 }
+
 export default App;

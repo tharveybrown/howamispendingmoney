@@ -3,45 +3,6 @@
   --input-padding-y: 0.75rem;
 }
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .card-signin {
   border: 0;
   border-radius: 1rem;
@@ -94,7 +55,7 @@
   width: 100%;
   margin-bottom: 0;
   line-height: 1.5;
-  color: #495057;
+  /* color: #495057; */
   border: 1px solid transparent;
   border-radius: 0.25rem;
   transition: all 0.2s ease-in-out;
@@ -175,4 +136,16 @@ div.layout div.layout_noscroll {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.transactions_aside {
+  width: 750px;
+  border-right: solid 1px var(--divider-color);
+
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+
+.summary_cards {
+  margin-bottom: 10px;
 }
