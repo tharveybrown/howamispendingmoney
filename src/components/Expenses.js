@@ -7,6 +7,7 @@ import filterFactory, {
 } from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import { palette } from "@material-ui/system";
 // import MaterialForm from "./MaterialForm";
 
 const columns = [
@@ -91,6 +92,7 @@ const Expenses = ({ expenses, onEdit }) => {
     <>
       {/* <MaterialForm /> */}
       <BootstrapTable
+        color="primary.main"
         striped
         hover
         keyField="id"

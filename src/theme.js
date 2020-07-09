@@ -6,8 +6,10 @@ import { darktheme } from "./themes/dark";
 import { lighttheme } from "./themes/light";
 
 function useTheme() {
-  const muiTheme = lighttheme;
-  return createMuiTheme(muiTheme);
+  const themeObject = createMuiTheme(lighttheme);
+
+  // const muiTheme = darktheme;
+  return createMuiTheme(themeObject);
 }
 
 export { useTheme };

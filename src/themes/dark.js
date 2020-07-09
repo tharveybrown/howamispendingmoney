@@ -5,11 +5,13 @@ import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import indigo from "@material-ui/core/colors/indigo";
+import { withTheme } from "@material-ui/core";
 
 const darktheme = {
   palette: {
     type: "dark",
     primary: blue,
+    secondary: green,
     background: {
       default: "rgb(21, 32, 42)",
       paper: "rgb(28, 41, 55)",
@@ -24,50 +26,18 @@ const darktheme = {
       green: green[400],
       yellow: "#FDD835",
     },
-    brand: {
-      nomadlist: "rgb(255, 71, 66)",
-    },
-    cardheader: "rgba(255, 255, 255, 0.12)",
+    // brand: {
+    //   nomadlist: "rgb(255, 71, 66)",
+    // },
+    // cardheader: "rgba(255, 255, 255, 0.12)",
     // Define color per category in theme to adjust constrast
     default: {
       primary: blue,
       main: blue[800],
     },
     dashboard: {
-      primary: blue,
-      main: blue[700],
-    },
-    transactions: {
-      primary: cyan,
-      main: cyan[800],
-    },
-    categories: {
       primary: green,
-      main: green[800],
-    },
-    changes: {
-      primary: orange,
-      main: orange[900],
-    },
-    report: {
-      primary: indigo,
-      main: indigo[500],
-    },
-    settings: {
-      primary: blueGrey,
-      main: blueGrey[600],
-    },
-    search: {
-      primary: blueGrey,
-      main: blueGrey[600],
-    },
-    convertor: {
-      primary: blueGrey,
-      main: blueGrey[600],
-    },
-    nomadlist: {
-      primary: red,
-      main: "rgb(255, 71, 66)",
+      main: blue[700],
     },
   },
   typography: {
