@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectBox = (props) => {
+const RadioBox = (props) => {
   const { type, name, handleChange, id } = props;
   return (
     <div className="form-label-group">
@@ -30,4 +30,4 @@ const SelectBox = (props) => {
   );
 };
 
-export default SelectBox;
+export default RadioBox;
