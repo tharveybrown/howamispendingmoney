@@ -18,7 +18,7 @@ const columns = [
     dataField: "date",
     text: "Date",
     filter: dateFilter(),
-    formatter: dateFormatter,
+    // formatter: dateFormatter,
   },
   {
     dataField: "amount",
@@ -61,6 +61,7 @@ const columns = [
 ];
 
 function dateFormatter(cell) {
+  debugger;
   let d = new Date(cell);
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
   const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d);
