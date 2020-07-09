@@ -35,6 +35,7 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
             <>
               {/* <NavigationLink link="/expenses" text="Expenses" /> */}
               <NavigationLink link="/new" text="New Expense" />
+              <NavigationLink link="/resources" text="Resources" />
               <NavigationLink
                 link="/login"
                 text="Logout"

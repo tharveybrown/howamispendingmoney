@@ -3,6 +3,7 @@ import Input from "./registrations/Input";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import axios from "axios";
 import RadioBox from "./RadioBox";
+import ExpenseSelect from "./ExpenseSelect";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -146,6 +147,10 @@ class NewExpense extends Component {
                     name="recurring"
                     value={recurring}
                   ></RadioBox>
+                  {/* <ExpenseSelect 
+                    handleChange={this.handleChange}
+                    value={category} >
+                    </ExpenseSelect> */}
                   <Input
                     placeholder="How often does this expense occur?"
                     type="schedule"
