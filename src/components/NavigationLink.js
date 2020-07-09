@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const NavigationLink = ({ link, text, handleLogout }) => {
   return (
-    <li class="nav-item active">
+    <li className="nav-item active">
       <NavLink
         exact
         activeClassName="navbar__link--active"

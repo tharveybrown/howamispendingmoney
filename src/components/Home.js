@@ -4,8 +4,18 @@ import runtimeEnv from "@mars/heroku-js-runtime-env";
 import BankAuth from "./BankAuth";
 import Expenses from "./Expenses";
 import Summary from "./Summary";
-
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/styles";
 import axios from "axios";
+import { MuiThemeProvider } from "@material-ui/core/styles"; // v1.x
+import { useTheme } from "../theme";
+
+const styles = (theme) => ({
+  root: {
+    background: "#607d8b",
+  },
+});
+const theme = useTheme();
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -20,6 +30,7 @@ class Home extends Component {
       expenses: [],
       purchases: [],
       donations: [],
+      categories: [],
       errors: [],
     };
   }
@@ -59,6 +70,17 @@ class Home extends Component {
             }, {})
           );
 
+          let categoryArray = Object.values(
+            purchasesOnly.reduce((a, { category, amount }) => {
+              a[category] = a[category] || { category, amount: 0 };
+              a[category].amount = String(
+                Number(a[category].amount) + Number(amount)
+              );
+
+              return a;
+            }, {})
+          );
+
           let currentDonated = donationsOnly
             .map((d) => d.amount)
             .reduce((a, b) => a + b);
@@ -75,6 +97,7 @@ class Home extends Component {
             expenses: response.data,
             purchases: purchases,
             donations: donations,
+            categories: categoryArray,
             spent: Math.round(currentSpent * 100) / 100,
             total: Math.round(currentTotal * 100) / 100,
             income: Math.round(currentIncome * 100) / 100,
@@ -160,40 +183,56 @@ class Home extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="layout">
-        <br></br>
-        {this.props.loggedInStatus ? (
-          <div className="show_transactions transactions_two_columns">
-            <div className="transactions_aside">
-              {this.state.expenses.length > 0 ? (
-                <Summary
-                  donations={this.state.donations}
-                  purchases={this.state.purchases}
-                  donated={this.state.donated}
-                  income={this.state.income}
-                  spent={this.state.spent}
-                  total={this.state.total}
+      <div
+        id="container"
+        style={{
+          backgroundColor: theme.palette.background.default,
+          color: theme.palette.text.primary,
+        }}
+      >
+        <div className="layout">
+          <br></br>
+          {this.props.loggedInStatus ? (
+            <div className="show_transactions transactions_two_columns">
+              <div className="transactions_aside">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {this.state.expenses.length > 0 ? (
+                    <Summary
+                      donations={this.state.donations}
+                      purchases={this.state.purchases}
+                      donated={this.state.donated}
+                      income={this.state.income}
+                      spent={this.state.spent}
+                      total={this.state.total}
+                      categories={this.state.categories}
+                    />
+                  ) : null}
+                </div>
+              </div>
+              <div className="layout_noscroll">
+                <BankAuth onSuccess={this.onSuccess} />
+                <Expenses
+                  expenses={this.state.expenses}
+                  onEdit={this.updateExpenses}
                 />
-              ) : null}
+              </div>
             </div>
-            <div className="layout_noscroll">
-              <BankAuth onSuccess={this.onSuccess} />
-              <Expenses
-                expenses={this.state.expenses}
-                onEdit={this.updateExpenses}
-              />
-            </div>
-          </div>
-        ) : (
-          <>
-            <Link to="/login">Log In</Link>
-            <br></br>
-            <Link to="/signup">Sign Up</Link>
-          </>
-        )}
+          ) : (
+            <>
+              <Link to="/login">Log In</Link>
+              <br></br>
+              <Link to="/signup">Sign Up</Link>
+            </>
+          )}
+        </div>
       </div>
     );
   }
 }
-export default Home;
+
+Home.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+export default withStyles(styles)(Home);

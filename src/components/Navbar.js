@@ -7,7 +7,11 @@ import NavigationLink from "./NavigationLink";
 const Navbar = ({ handleLogout, loggedInStatus }) => {
   console.log(loggedInStatus);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav
+      className="navbar navbar-expand-lg navbar-light"
+      style={{ background: "#FFE973" }}
+      // style={{background-color: '#FFE973'}}
+    >
       <button
         className="navbar-toggler"
         type="button"

@@ -14,6 +14,7 @@ const legend = {
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   legend: {
     position: "top",
   },
@@ -30,27 +31,20 @@ const options = {
     xAxes: [
       {
         gridLines: false,
-        // ticks: {
-        //   callback(tick, index) {
-        //     // Jump every 7 values on the X axis labels to avoid clutter.
-        //     return index % 7 !== 0 ? "" : tick;
-        //   },
-        // },
       },
     ],
     yAxes: [
-      {
-        ticks: {
-          suggestedMax: 45,
-          callback(tick) {
-            if (tick === 0) {
-              return tick;
-            }
-            // Format the amounts using Ks for thousands.
-            return tick > 999 ? `${(tick / 1000).toFixed(1)}K` : tick;
-          },
-        },
-      },
+      // {
+      //   ticks: {
+      //     suggestedMax: 45,
+      //     callback(tick) {
+      //       if (tick === 0) {
+      //         return tick;
+      //       }
+      //       return tick > 999 ? `${(tick / 1000).toFixed(1)}K` : tick;
+      //     },
+      //   },
+      // },
     ],
   },
   hover: {
@@ -73,8 +67,6 @@ export default class ExpenseChart extends React.Component {
   }
 
   componentDidMount() {
-    console.log("PURCHASES", this.props);
-    // debugger;
     const sortDates = (a, b) => {
       var keyA = new Date(a.date),
         keyB = new Date(b.date);
@@ -103,9 +95,6 @@ export default class ExpenseChart extends React.Component {
             .sort((a, b) => sortDates(a, b))
             .map((d) => -1 * d.amount),
           fill: "start",
-          // borderWidth: 1.5,
-          // backgroundColor: "rgba(23,198,113,0.1)",
-          // borderColor: "rgb(23,198,113)",
           backgroundColor: "rgba(0,123,255,0.1)",
           borderColor: "rgba(0,123,255,1)",
           pointBackgroundColor: "#ffffff",
@@ -140,8 +129,8 @@ export default class ExpenseChart extends React.Component {
     return (
       <div className="">
         <Line
-          width="600"
-          height="300"
+          width={500}
+          height={300}
           data={this.state.chartData}
           legend={legend}
           options={options}

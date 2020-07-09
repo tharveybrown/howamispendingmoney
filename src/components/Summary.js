@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ExpenseChart from "./ExpenseChart";
+import CategoryChart from "./CategoryChart";
 
 import Paper from "@material-ui/core/Paper";
 
@@ -9,12 +10,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(1),
+    // width: 800,
   },
   paper: {
-    height: 100,
-    width: 180,
+    height: 80,
+    width: 120,
   },
   control: {
     padding: theme.spacing(1),
@@ -28,6 +30,7 @@ export default function Summary({
   spent,
   total,
   income,
+  categories,
 }) {
   const [spacing, setSpacing] = React.useState(6);
   const classes = useStyles();
@@ -62,6 +65,9 @@ export default function Summary({
         </Grid>
         <Grid container direction="row" justify="center" alignItems="center">
           <ExpenseChart donations={donations} purchases={purchases} />
+        </Grid>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <CategoryChart categories={categories} />
         </Grid>
       </Grid>
     </>
