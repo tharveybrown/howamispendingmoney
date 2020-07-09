@@ -3,14 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ExpenseChart from "./ExpenseChart";
 import CategoryChart from "./CategoryChart";
+import { Divider } from "@material-ui/core";
 
 import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // ...theme.typography.button,
-    // backgroundColor: theme.palette.background.default,
+    width: "100%",
+    // maxWidth: 360,
     padding: theme.spacing(1),
     // width: 800,
   },
@@ -41,7 +42,7 @@ export default function Summary({
   return (
     <>
       <Grid container className={classes.root} spacing={1}>
-        <Grid item xs={12}>
+        <Grid className="summary-cards" item xs={12}>
           <Grid container justify="center" spacing={spacing}>
             <Grid key="donated" item>
               <Paper elevation={3} className={classes.paper}>
@@ -63,9 +64,17 @@ export default function Summary({
             </Grid>
           </Grid>
         </Grid>
-        <Grid container direction="row" justify="center" alignItems="center">
+        <Divider light />
+        <Grid
+          container
+          className={classes.control}
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
           <ExpenseChart donations={donations} purchases={purchases} />
         </Grid>
+        <Divider variant="middle" />
         <Grid container direction="row" justify="center" alignItems="center">
           <CategoryChart categories={categories} />
         </Grid>

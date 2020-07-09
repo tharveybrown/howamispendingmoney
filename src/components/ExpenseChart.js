@@ -20,7 +20,6 @@ const options = {
   },
   elements: {
     line: {
-      // A higher value makes the line look skewed at this ratio.
       tension: 0.3,
     },
     point: {
@@ -32,19 +31,6 @@ const options = {
       {
         gridLines: false,
       },
-    ],
-    yAxes: [
-      // {
-      //   ticks: {
-      //     suggestedMax: 45,
-      //     callback(tick) {
-      //       if (tick === 0) {
-      //         return tick;
-      //       }
-      //       return tick > 999 ? `${(tick / 1000).toFixed(1)}K` : tick;
-      //     },
-      //   },
-      // },
     ],
   },
   hover: {
