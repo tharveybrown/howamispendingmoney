@@ -98,7 +98,7 @@ class NewExpense extends Component {
       <>
         <button
           type="button"
-          class="btn btn-primary col-4"
+          class="btn btn-primary"
           data-toggle="modal"
           data-target="#exampleModal"
         >
