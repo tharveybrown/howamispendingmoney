@@ -10,7 +10,7 @@ console.log(env);
 
 const BankAuth = (props) => {
   return (
-    <div>
+    <div className="plaid-link">
       <PlaidLink
         clientName="Donation tracker"
         env="sandbox"
