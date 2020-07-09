@@ -3,10 +3,7 @@ import { NavLink } from "react-router-dom";
 import NavigationLink from "./NavigationLink";
 import Toggle from "./Toggle";
 
-// import "../styles/navbar.css";
-
 const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
-  console.log(loggedInStatus);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light"

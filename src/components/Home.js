@@ -152,7 +152,6 @@ class Home extends Component {
 
   updateExpenses = (expense) => {
     const authToken = localStorage.getItem("token");
-    console.log(expense);
     let config = {
       headers: {
         Authorization: `Bearer ${authToken}`,
