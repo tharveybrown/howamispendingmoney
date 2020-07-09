@@ -6,6 +6,8 @@ import filterFactory, {
   selectFilter,
 } from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
+import paginationFactory from "react-bootstrap-table2-paginator";
+// import MaterialForm from "./MaterialForm";
 
 const columns = [
   {
@@ -39,7 +41,7 @@ const columns = [
     sort: true,
     formatter: (cellContent, row) => {
       if (cellContent) {
-        return <span className="badge badge-primary"> TRUE </span>;
+        return <span className="badge badge-success"> TRUE </span>;
       }
       return <span className="badge badge-warning"> FALSE </span>;
     },
@@ -85,8 +87,10 @@ const Expenses = ({ expenses, onEdit }) => {
     onEdit(row);
   }
   console.log(expenses);
+
   return (
-    <div>
+    <>
+      {/* <MaterialForm /> */}
       <BootstrapTable
         striped
         hover
@@ -98,9 +102,10 @@ const Expenses = ({ expenses, onEdit }) => {
           blurToSave: true,
           afterSaveCell,
         })}
+        pagination={paginationFactory()}
         columns={columns}
       />
-    </div>
+    </>
   );
 };
 
