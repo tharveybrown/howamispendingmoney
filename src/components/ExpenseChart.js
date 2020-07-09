@@ -75,14 +75,33 @@ export default class ExpenseChart extends React.Component {
   componentDidMount() {
     console.log("PURCHASES", this.props);
     // debugger;
+    const sortDates = (a, b) => {
+      var keyA = new Date(a.date),
+        keyB = new Date(b.date);
+      // Compare the 2 dates
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    };
     const data = {
       // Todo: need to map expense to date
-      labels: this.props.purchases.map((p) => p.date.split("T")[0]),
+      labels: this.props.purchases
+        .sort((a, b) => {
+          var keyA = new Date(a.date),
+            keyB = new Date(b.date);
+          // Compare the 2 dates
+          if (keyA < keyB) return -1;
+          if (keyA > keyB) return 1;
+          return 0;
+        })
+        .map((p) => p.date.split("T")[0]),
       attrs: { md: "6", sm: "6" },
       datasets: [
         {
           label: "Donations",
-          data: this.props.donations.map((d) => -1 * d.amount),
+          data: this.props.donations
+            .sort((a, b) => sortDates(a, b))
+            .map((d) => -1 * d.amount),
           fill: "start",
           // borderWidth: 1.5,
           // backgroundColor: "rgba(23,198,113,0.1)",
@@ -97,7 +116,9 @@ export default class ExpenseChart extends React.Component {
         },
         {
           label: "Purchases",
-          data: this.props.purchases.map((p) => -1 * p.amount),
+          data: this.props.purchases
+            .sort((a, b) => sortDates(a, b))
+            .map((p) => -1 * p.amount),
           fill: "start",
           backgroundColor: "rgba(255,65,105,0.1)",
           borderColor: "rgba(255,65,105,1)",
