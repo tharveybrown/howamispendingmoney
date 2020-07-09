@@ -36,9 +36,6 @@ export default function Summary({
   const [spacing, setSpacing] = React.useState(6);
   const classes = useStyles();
 
-  // const donations = expenses.map(exp => )
-
-  // console.log("PROPS", props);
   return (
     <>
       <Grid container className={classes.root} spacing={1}>

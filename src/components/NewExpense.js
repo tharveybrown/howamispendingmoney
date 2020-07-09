@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import Input from "./registrations/Input";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import axios from "axios";
+import $ from "jquery";
 import RadioBox from "./RadioBox";
+import Switch from "./Switch";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
 let date = new Date();
 
 class NewExpense extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       name: "",
       amount: 0,
@@ -19,6 +21,7 @@ class NewExpense extends Component {
       schedule: "",
       recurring: false,
       donation: false,
+      isIncome: false,
       errors: [],
     };
   }
@@ -29,10 +32,13 @@ class NewExpense extends Component {
       [name]: value,
     });
   };
+  handleToggle = (event) => {
+    this.setState({ ...this.state, [event.target.name]: event.target.checked });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const {
+    let {
       name,
       amount,
       date,
@@ -41,8 +47,11 @@ class NewExpense extends Component {
       recurring,
       donation,
       id,
+      isIncome,
     } = this.state;
     const token = localStorage.getItem("token");
+
+    amount = !isIncome ? amount * -1 : amount;
     axios
       .post(
         `${url}/expenses`,
@@ -55,16 +64,15 @@ class NewExpense extends Component {
           },
         }
       )
-      .then((resp) => resp.data)
-      .then((data) => {
-        this.props.handleLogin(data.user);
-        this.redirect();
+      .then((res) => {
+        this.props.updateExpenseState(res.data);
+        let modal = document.querySelector('[data-dismiss="modal"]');
+        modal.click();
+        return;
       })
+
       .catch((error) => {
         console.log("api errors:", error);
-        this.setState({
-          errors: error,
-        });
       });
   };
   redirect = () => {
@@ -92,22 +100,59 @@ class NewExpense extends Component {
       schedule,
       recurring,
       donation,
+      isIncome,
     } = this.state;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                <h5 className="card-title text-center">Create a New Expense</h5>
+      <>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          New Expense
+        </button>
+
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  New Expense
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
                 <form className="form-signin" onSubmit={this.handleSubmit}>
+                  <Switch
+                    handleChange={this.handleToggle}
+                    id="isIncome"
+                    name="isIncome"
+                    value={isIncome}
+                    label="Income"
+                  />
                   <Input
-                    placeholder="Company/ Organization Name"
+                    placeholder="Company / Organization Name"
                     type="text"
                     handleChange={this.handleChange}
                     id="inputName"
                     name="name"
                     value={name}
+                    required={true}
                   />
                   <Input
                     placeholder="Amount"
@@ -115,6 +160,7 @@ class NewExpense extends Component {
                     handleChange={this.handleChange}
                     name="amount"
                     value={amount}
+                    required={true}
                   />
                   <Input
                     placeholder="Date"
@@ -132,19 +178,22 @@ class NewExpense extends Component {
                     name="category"
                     value={category}
                   />
-                  Is this a Donation?
+                  {/* Is this a Donation? */}
                   <RadioBox
+                    header="Is this a donation?"
                     type="radio"
                     handleChange={this.handleChange}
                     name="donation"
                     value={donation}
+                    options={["yes", "no"]}
                   ></RadioBox>
-                  Is this a recurring expense?
                   <RadioBox
+                    header="Is this a recurring expense?"
                     type="radio"
                     handleChange={this.handleChange}
                     name="recurring"
                     value={recurring}
+                    options={["yes", "no"]}
                   ></RadioBox>
                   <Input
                     placeholder="How often does this expense occur?"
@@ -153,21 +202,29 @@ class NewExpense extends Component {
                     id="inputSchedule"
                     name="schedule"
                     value={schedule}
+                    required={false}
                   />
                   <button
                     placeholder="submit"
                     className="btn btn-primary btn-block text-uppercase"
                     type="submit"
+                    onSubmit={this.handleSubmit}
+                    // data-dismiss="modal"
                   >
                     Create New Expense
                   </button>
                 </form>
                 <div>{this.state.errors ? this.handleErrors() : null}</div>
               </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

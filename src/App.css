@@ -93,10 +93,6 @@
   color: #777;
 }
 
-.plaid-link {
-  margin-bottom: 10px;
-}
-
 div.layout {
   position: relative;
   top: 0;
@@ -148,4 +144,8 @@ div.layout div.layout_noscroll {
 
 .summary_cards {
   margin-bottom: 10px;
+}
+
+.new-expense {
+  margin-bottom: 5px;
 }

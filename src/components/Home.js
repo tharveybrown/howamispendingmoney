@@ -4,7 +4,7 @@ import runtimeEnv from "@mars/heroku-js-runtime-env";
 import BankAuth from "./BankAuth";
 import Expenses from "./Expenses";
 import Summary from "./Summary";
-
+import NewExpense from "./NewExpense";
 import axios from "axios";
 
 const url = runtimeEnv().REACT_APP_API_URL;
@@ -142,9 +142,16 @@ class Home extends Component {
       );
   };
 
+  updateExpenseState = (expense) => {
+    return this.setState((previousState) => {
+      return {
+        expenses: [...previousState.expenses, expense],
+      };
+    });
+  };
+
   updateExpenses = (expense) => {
     const authToken = localStorage.getItem("token");
-    console.log(expense);
     let config = {
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -154,7 +161,7 @@ class Home extends Component {
     axios
       .patch(`${url}/expenses/${expense.id}`, expense, config)
       .then((res) => {
-        const elementsIndex = this.state.expense.findIndex(
+        const elementsIndex = this.state.expenses.findIndex(
           (element) => element.id == res.data.id
         );
         let previousState = [...this.state.expenses];
@@ -195,11 +202,24 @@ class Home extends Component {
                 </div>
               </div>
               <div className="layout_noscroll">
-                <BankAuth onSuccess={this.onSuccess} />
+                <div className="container-fluid">
+                  <div class="row">
+                    <div className="col-md">
+                      <NewExpense
+                        updateExpenseState={this.updateExpenseState}
+                      />
+                    </div>
+                    <div className="col-sm">
+                      <BankAuth onSuccess={this.onSuccess} />
+                    </div>
+                  </div>
+                </div>
+                {/* {this.state.expenses.length > 0 ? ( */}
                 <Expenses
                   expenses={this.state.expenses}
                   onEdit={this.updateExpenses}
                 />
+                {/* ) : null} */}
               </div>
             </div>
           ) : (

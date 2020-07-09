@@ -38,8 +38,7 @@ class App extends Component {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((resp) => resp.json())
-      .then((data) => console.log("APP DATA", data));
+      .then((resp) => resp.json());
   };
 
   useEffect = () => {
@@ -53,9 +52,7 @@ class App extends Component {
         })
         .then((resp) => resp.data)
         .then((data) => {
-          console.log("USE EFFECT", data);
           this.setState({ user: data, isLoggedIn: true });
-          // console.log(data)
         });
     }
   };
@@ -67,22 +64,18 @@ class App extends Component {
       user: data,
     });
   };
+
   handleLogout = () => {
-    // let history = useHistory();
     localStorage.clear();
-    // props.history.push("/");
     this.setState({
       isLoggedIn: false,
       user: {},
     });
-    // history.push("/login");
   };
 
   toggleTheme = () => {
-    // if the theme is not light, then set it to dark
     if (this.state.theme === "light") {
       this.setState({ theme: "dark" });
-      // otherwise, it should be light
     } else {
       this.setState({ theme: "light" });
     }
@@ -137,7 +130,6 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route exact path="/expenses" component={Expenses} /> */}
               <Route
                 exact
                 path="/new"
