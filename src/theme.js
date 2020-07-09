@@ -4,6 +4,7 @@ export const lightTheme = {
   card: "#eceff1",
   cardText: "#455a64",
   hover: "#363547",
+  tableBorder: "#cfd8dc",
   toggleBorder: "#FFF",
   gradient: "linear-gradient(#39598A, #79D7ED)",
 };
@@ -14,6 +15,7 @@ export const darkTheme = {
   card: "#78909c",
   cardText: "#455a64",
   hover: "#fd6f53",
+  tableBorder: "#263238",
   toggleBorder: "#6B8096",
   gradient: "linear-gradient(#091236, #1E215D)",
 };
