@@ -3,7 +3,7 @@
   --input-padding-y: 0.75rem;
 }
 
-html,
+/* html,
 body {
   margin: 0;
   padding: 0;
@@ -15,8 +15,8 @@ h1 {
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
+} */
+/* 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -30,7 +30,7 @@ h1 {
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .card-signin {
   border: 0;

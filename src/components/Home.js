@@ -4,18 +4,8 @@ import runtimeEnv from "@mars/heroku-js-runtime-env";
 import BankAuth from "./BankAuth";
 import Expenses from "./Expenses";
 import Summary from "./Summary";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/styles";
-import axios from "axios";
-import { MuiThemeProvider } from "@material-ui/core/styles"; // v1.x
-import { useTheme } from "../theme";
 
-const styles = (theme) => ({
-  root: {
-    background: "#607d8b",
-  },
-});
-const theme = useTheme();
+import axios from "axios";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -183,15 +173,8 @@ class Home extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <div
-        id="container"
-        style={{
-          backgroundColor: theme.palette.background.default,
-          color: theme.palette.text.primary,
-        }}
-      >
+      <div id="container">
         <div className="layout">
           <br></br>
           {this.props.loggedInStatus ? (
@@ -232,7 +215,4 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(Home);
+export default Home;

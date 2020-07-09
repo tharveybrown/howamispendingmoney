@@ -4,25 +4,17 @@ import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/registrations/Login";
-import Expenses from "./components/Expenses";
-import { MuiThemeProvider } from "@material-ui/core/styles";
 import NewExpense from "./components/NewExpense";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/styles";
 import Signup from "./components/registrations/Signup";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./theme";
+import { GlobalStyles } from "./global";
 import "./App.css";
-import "./index.css";
+// import "./index.css";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import Navbar from "./components/Navbar";
-import { useTheme } from "./theme";
 
 const url = runtimeEnv().REACT_APP_API_URL;
-const theme = useTheme();
-const styles = (theme) => ({
-  root: {
-    background: "#607d8b",
-  },
-});
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +23,7 @@ class App extends Component {
       isLoggedIn: false,
       user: {},
       expenses: [],
+      theme: "light",
     };
   }
   componentDidMount() {
@@ -85,13 +78,27 @@ class App extends Component {
     // history.push("/login");
   };
 
+  toggleTheme = () => {
+    // if the theme is not light, then set it to dark
+    if (this.state.theme === "light") {
+      this.setState({ theme: "dark" });
+      // otherwise, it should be light
+    } else {
+      this.setState({ theme: "light" });
+    }
+  };
+
   render() {
     return (
-      <div>
-        {/* <Routes props={this.props} /> */}
-        <BrowserRouter>
-          <MuiThemeProvider theme={theme}>
+      <ThemeProvider
+        theme={this.state.theme === "light" ? lightTheme : darkTheme}
+      >
+        <>
+          <GlobalStyles />
+          <BrowserRouter>
             <Navbar
+              theme={this.state.theme}
+              toggleTheme={this.toggleTheme}
               loggedInStatus={this.state.isLoggedIn}
               handleLogout={this.handleLogout}
             />
@@ -143,14 +150,11 @@ class App extends Component {
                 )}
               />
             </Switch>
-          </MuiThemeProvider>
-        </BrowserRouter>
-      </div>
+          </BrowserRouter>
+        </>
+      </ThemeProvider>
     );
   }
 }
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(App);
+export default App;

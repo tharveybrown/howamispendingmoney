@@ -7,8 +7,6 @@ import filterFactory, {
 } from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { palette } from "@material-ui/system";
-// import MaterialForm from "./MaterialForm";
 
 const columns = [
   {
@@ -86,7 +84,6 @@ const Expenses = ({ expenses, onEdit }) => {
   function afterSaveCell(oldValue, newValue, row, column, done) {
     onEdit(row);
   }
-  console.log(expenses);
 
   return (
     <>

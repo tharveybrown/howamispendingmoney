@@ -9,8 +9,8 @@ import Paper from "@material-ui/core/Paper";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    ...theme.typography.button,
-    backgroundColor: theme.palette.background.default,
+    // ...theme.typography.button,
+    // backgroundColor: theme.palette.background.default,
     padding: theme.spacing(1),
     // width: 800,
   },
