@@ -40,89 +40,91 @@ class Home extends Component {
           },
         })
         .then((response) => {
-          console.log("RESPONSE", response);
-          let donationsOnly = response.data.filter((exp) => exp.donation);
-          let recurringOnly = response.data
-            .filter((exp) => exp.recurring)
-            .map(function (elem) {
-              return {
-                name: elem.name,
-                amount: elem.amount,
-                schedule: elem.schedule,
-                id: elem.id,
-                donation: elem.donation,
-                category: elem.category,
-                date: new Date(elem.date).toLocaleDateString("en-US"),
-              };
-            });
-
-          let recurringReduced = _.uniqWith(recurringOnly, _.isEqual);
-          let donations = Object.values(
-            donationsOnly.reduce((a, { date, amount }) => {
-              a[date] = a[date] || { date, amount: 0 };
-              a[date].amount = String(Number(a[date].amount) + Number(amount));
-
-              return a;
-            }, {})
-          );
-
-          let purchasesOnly = response.data.filter(
-            (exp) => !exp.donation && exp.amount < 0
-          );
-
-          let purchases = Object.values(
-            purchasesOnly.reduce((a, { date, amount }) => {
-              a[date] = a[date] || { date, amount: 0 };
-              a[date].amount = String(Number(a[date].amount) + Number(amount));
-
-              return a;
-            }, {})
-          );
-
-          let categoryArray = Object.values(
-            purchasesOnly.reduce((a, { category, amount }) => {
-              a[category] = a[category] || { category, amount: 0 };
-              a[category].amount = String(
-                Number(a[category].amount) + Number(amount)
-              );
-
-              return a;
-            }, {})
-          );
-          let currentDonated = 0;
-          if (donationsOnly.length) {
-            currentDonated = donationsOnly
-              .map((d) => d.amount)
-              .reduce((a, b) => a + b);
-          }
-          let currentSpent = 0;
-          if (purchasesOnly.length) {
-            currentSpent = purchasesOnly
-              .map((d) => d.amount)
-              .reduce((a, b) => a + b);
-          }
-
-          let currentIncome = response.data
-            .filter((exp) => exp.amount > 0)
-            .map((exp) => exp.amount)
-            .reduce((sum, val) => sum + val, this.state.income);
-          let currentTotal = currentIncome + currentDonated + currentSpent;
-
-          return this.setState({
-            expenses: response.data,
-            purchases: purchases,
-            donations: donations,
-            categories: categoryArray,
-            recurring: recurringReduced,
-            loading: false,
-            spent: Math.round(currentSpent * 100) / 100,
-            total: Math.round(currentTotal * 100) / 100,
-            income: Math.round(currentIncome * 100) / 100,
-            donated: Math.round(currentDonated * 100) / 100,
-          });
+          const expenses = response.data;
+          return this.updateState(expenses);
         })
         .catch((err) => console.log(err));
     }
+  }
+
+  updateState(expenses) {
+    let donationsOnly = expenses.filter((exp) => exp.donation);
+    let recurringOnly = expenses
+      .filter((exp) => exp.recurring)
+      .map(function (elem) {
+        return {
+          name: elem.name,
+          amount: elem.amount,
+          schedule: elem.schedule,
+          id: elem.id,
+          donation: elem.donation,
+          category: elem.category,
+          date: new Date(elem.date).toLocaleDateString("en-US"),
+        };
+      });
+
+    let recurringReduced = _.uniqWith(recurringOnly, _.isEqual);
+    let donations = Object.values(
+      donationsOnly.reduce((a, { date, amount }) => {
+        a[date] = a[date] || { date, amount: 0 };
+        a[date].amount = String(Number(a[date].amount) + Number(amount));
+
+        return a;
+      }, {})
+    );
+
+    let purchasesOnly = expenses.filter(
+      (exp) => !exp.donation && exp.amount < 0
+    );
+
+    let purchases = Object.values(
+      purchasesOnly.reduce((a, { date, amount }) => {
+        a[date] = a[date] || { date, amount: 0 };
+        a[date].amount = String(Number(a[date].amount) + Number(amount));
+
+        return a;
+      }, {})
+    );
+
+    let categoryArray = Object.values(
+      purchasesOnly.reduce((a, { category, amount }) => {
+        a[category] = a[category] || { category, amount: 0 };
+        a[category].amount = String(
+          Number(a[category].amount) + Number(amount)
+        );
+
+        return a;
+      }, {})
+    );
+    let currentDonated = 0;
+    if (donationsOnly.length) {
+      currentDonated = donationsOnly
+        .map((d) => d.amount)
+        .reduce((a, b) => a + b);
+    }
+    let currentSpent = 0;
+    if (purchasesOnly.length) {
+      currentSpent = purchasesOnly.map((d) => d.amount).reduce((a, b) => a + b);
+    }
+
+    let currentIncome = expenses
+      .filter((exp) => exp.amount > 0)
+      .map((exp) => exp.amount)
+      .reduce((sum, val) => sum + val, this.state.income);
+    let currentTotal = currentIncome + currentDonated + currentSpent;
+
+    return this.setState({
+      expenses: expenses,
+      purchases: purchases,
+      donations: donations,
+      categories: categoryArray,
+      recurring: recurringReduced,
+      loading: false,
+      spent: Math.round(currentSpent * 100) / 100,
+      total: Math.round(currentTotal * 100) / 100,
+      income: Math.round(currentIncome * 100) / 100,
+      donated: Math.round(currentDonated * 100) / 100,
+    });
   }
   onSuccess = (token, metadata) => {
     const authToken = localStorage.getItem("token");
@@ -162,11 +164,9 @@ class Home extends Component {
         }
       )
       .then((res) => {
-        this.setState({
-          loading: false,
-          expenses: res.data,
-        });
-      });
+        this.updateState(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   updateExpenseState = (expense) => {
