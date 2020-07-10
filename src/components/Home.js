@@ -6,7 +6,7 @@ import Expenses from "./Expenses";
 import Summary from "./Summary";
 import NewExpense from "./NewExpense";
 import axios from "axios";
-import Recurring from "./Recurring";
+import _ from "lodash";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -18,6 +18,7 @@ class Home extends Component {
       donated: 0,
       income: 0,
       total: 0,
+      recurring: [],
       expenses: [],
       purchases: [],
       donations: [],
@@ -38,7 +39,20 @@ class Home extends Component {
         .then((response) => {
           console.log("RESPONSE", response);
           let donationsOnly = response.data.filter((exp) => exp.donation);
+          let recurringOnly = response.data
+            .filter((exp) => exp.recurring)
+            .map(function (elem) {
+              return {
+                name: elem.name,
+                amount: elem.amount,
+                schedule: elem.schedule,
+                id: elem.id,
+                donation: elem.donation,
+                category: elem.category,
+              };
+            });
 
+          let recurringReduced = _.uniqWith(recurringOnly, _.isEqual);
           let donations = Object.values(
             donationsOnly.reduce((a, { date, amount }) => {
               a[date] = a[date] || { date, amount: 0 };
@@ -95,6 +109,7 @@ class Home extends Component {
             purchases: purchases,
             donations: donations,
             categories: categoryArray,
+            recurring: recurringReduced,
             spent: Math.round(currentSpent * 100) / 100,
             total: Math.round(currentTotal * 100) / 100,
             income: Math.round(currentIncome * 100) / 100,
@@ -203,8 +218,8 @@ class Home extends Component {
                         spent={this.state.spent}
                         total={this.state.total}
                         categories={this.state.categories}
+                        recurring={this.state.recurring}
                       />
-                      <Recurring expenses={this.state.expenses} />
                     </>
                   ) : null}
                 </div>
