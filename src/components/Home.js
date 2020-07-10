@@ -238,20 +238,19 @@ class Home extends Component {
                 </div>
               </div>
               <div className="layout_noscroll">
-                <div className="layout_content">
-                  <div className="container-fluid">
-                    <div class="row">
-                      <div className="col-md">
-                        <NewExpense
-                          updateExpenseState={this.updateExpenseState}
-                        />
-                      </div>
-                      <div className="col-sm">
-                        <BankAuth onSuccess={this.onSuccess} />
-                      </div>
+                <div className="container-fluid">
+                  <div class="row">
+                    <div className="col-md">
+                      <NewExpense
+                        updateExpenseState={this.updateExpenseState}
+                      />
+                    </div>
+                    <div className="col-sm">
+                      <BankAuth onSuccess={this.onSuccess} />
                     </div>
                   </div>
                 </div>
+
                 {/* {this.state.expenses.length > 0 ? ( */}
                 <Expenses
                   loading={this.state.loading}
