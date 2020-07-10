@@ -49,6 +49,7 @@ class Home extends Component {
                 id: elem.id,
                 donation: elem.donation,
                 category: elem.category,
+                date: elem.date,
               };
             });
 
