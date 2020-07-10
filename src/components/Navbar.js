@@ -2,11 +2,22 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import NavigationLink from "./NavigationLink";
 import Toggle from "./Toggle";
+import { makeStyles } from "@material-ui/core/styles";
+import GitHubIcon from "@material-ui/icons/GitHub";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > svg": {
+      margin: theme.spacing(2),
+    },
+  },
+}));
 
 const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
+  const classes = useStyles();
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light"
+      className={`${classes.root} navbar navbar-expand-lg navbar-light`}
       style={{ background: "#FFE973" }}
       // style={{background-color: '#FFE973'}}
     >
@@ -25,9 +36,9 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
         <a className="navbar-brand" href="#">
           smarter spending
         </a>
+
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <NavigationLink link="/" text="Home" />
-
           {loggedInStatus ? (
             <>
               <NavigationLink link="/resources" text="Resources" />
@@ -40,9 +51,32 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
             </>
           ) : null}
         </ul>
-        <Toggle toggleTheme={toggleTheme} theme={theme}>
-          Toggle theme
-        </Toggle>
+        <div className="nav-item">
+          <Toggle toggleTheme={toggleTheme} theme={theme}>
+            Toggle theme
+          </Toggle>
+        </div>
+        <div className="nav-item">
+          <a
+            target="_blank"
+            className="nav-link"
+            href="https://github.com/tharveybrown"
+          >
+            <GitHubIcon color="secondary" />
+            &nbsp;&nbsp;@tharveybrown
+          </a>
+        </div>
+        <div className="nav-item">
+          <a
+            target="_blank"
+            className="nav-link"
+            href="https://github.com/MagdalenaJasmine"
+          >
+            <GitHubIcon color="secondary" />
+            &nbsp;&nbsp;@MagdalenaJasmine
+          </a>
+          {/* https://github.com/MagdalenaJasmine */}
+        </div>
       </div>
     </nav>
   );
