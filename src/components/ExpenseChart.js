@@ -114,13 +114,15 @@ export default class ExpenseChart extends React.Component {
   render() {
     return (
       <div className="">
-        <Line
-          width={500}
-          height={300}
-          data={this.state.chartData}
-          legend={legend}
-          options={options}
-        />
+        {this.props.purchases.length ? (
+          <Line
+            width={500}
+            height={300}
+            data={this.state.chartData}
+            legend={legend}
+            options={options}
+          />
+        ) : null}
       </div>
     );
   }

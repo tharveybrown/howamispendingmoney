@@ -212,3 +212,7 @@ div.layout div.layout_noscroll {
 .new-expense {
   margin-bottom: 5px;
 }
+.accordian-box {
+  /* height: "400px"; */
+  overflow: auto;
+}
