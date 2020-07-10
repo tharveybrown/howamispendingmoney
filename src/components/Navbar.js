@@ -4,6 +4,7 @@ import NavigationLink from "./NavigationLink";
 import Toggle from "./Toggle";
 import { makeStyles } from "@material-ui/core/styles";
 import GitHubIcon from "@material-ui/icons/GitHub";
+// import logo from "../../public/logo.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +34,13 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a className="navbar-brand" href="#">
-          smarter spending
+        <a href="/" class="navbar-brand">
+          <img
+            src={process.env.PUBLIC_URL + "/logo.svg"}
+            height="28"
+            alt="smarterspending"
+          />
+          &nbsp;&nbsp;smarter spending
         </a>
 
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
