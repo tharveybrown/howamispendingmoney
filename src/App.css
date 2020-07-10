@@ -192,8 +192,8 @@ div.layout div.layout_noscroll {
 
 .splash-title {
   font-weight: 900;
-  color: rgb(0, 0, 0);
-  text-shadow: 5px 5px 5px rgb(250, 246, 246);
+  /* color: rgb(0, 0, 0); */
+  /* text-shadow: 5px 5px 5px rgb(250, 246, 246); */
 }
 
 .header-bg {
@@ -204,7 +204,7 @@ div.layout div.layout_noscroll {
 
 .cause {
   font-weight: 900;
-  color: rgb(0, 0, 0);
+  /* color: rgb(0, 0, 0); */
   opacity: 0.7;
   margin-left: 10px;
 }

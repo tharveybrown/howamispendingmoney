@@ -6,6 +6,7 @@ import Expenses from "./Expenses";
 import Summary from "./Summary";
 import NewExpense from "./NewExpense";
 import axios from "axios";
+import Recurring from "./Recurring";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -70,13 +71,19 @@ class Home extends Component {
               return a;
             }, {})
           );
+          let currentDonated = 0;
+          if (donationsOnly.length) {
+            currentDonated = donationsOnly
+              .map((d) => d.amount)
+              .reduce((a, b) => a + b);
+          }
+          let currentSpent = 0;
+          if (purchasesOnly.length) {
+            currentSpent = purchasesOnly
+              .map((d) => d.amount)
+              .reduce((a, b) => a + b);
+          }
 
-          let currentDonated = donationsOnly
-            .map((d) => d.amount)
-            .reduce((a, b) => a + b);
-          let currentSpent = purchasesOnly
-            .map((d) => d.amount)
-            .reduce((a, b) => a + b);
           let currentIncome = response.data
             .filter((exp) => exp.amount > 0)
             .map((exp) => exp.amount)
@@ -133,19 +140,17 @@ class Home extends Component {
           },
         }
       )
-      .then((res) =>
-        this.setState((previousState) => {
-          return {
-            expenses: [...previousState.expenses, res.data.transactions],
-          };
-        })
-      );
+      .then((res) => {
+        this.setState({
+          expenses: res.data,
+        });
+      });
   };
 
   updateExpenseState = (expense) => {
     return this.setState((previousState) => {
       return {
-        expenses: [...previousState.expenses, expense],
+        expenses: [...previousState.expenses, expense.expense],
       };
     });
   };
@@ -189,15 +194,18 @@ class Home extends Component {
               <div className="transactions_aside">
                 <div style={{ display: "flex", alignItems: "center" }}>
                   {this.state.expenses.length > 0 ? (
-                    <Summary
-                      donations={this.state.donations}
-                      purchases={this.state.purchases}
-                      donated={this.state.donated}
-                      income={this.state.income}
-                      spent={this.state.spent}
-                      total={this.state.total}
-                      categories={this.state.categories}
-                    />
+                    <>
+                      <Summary
+                        donations={this.state.donations}
+                        purchases={this.state.purchases}
+                        donated={this.state.donated}
+                        income={this.state.income}
+                        spent={this.state.spent}
+                        total={this.state.total}
+                        categories={this.state.categories}
+                      />
+                      <Recurring expenses={this.state.expenses} />
+                    </>
                   ) : null}
                 </div>
               </div>
@@ -219,6 +227,7 @@ class Home extends Component {
                   expenses={this.state.expenses}
                   onEdit={this.updateExpenses}
                 />
+
                 {/* ) : null} */}
               </div>
             </div>
