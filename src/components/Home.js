@@ -6,6 +6,7 @@ import Expenses from "./Expenses";
 import Summary from "./Summary";
 import NewExpense from "./NewExpense";
 import axios from "axios";
+import Recurring from "./Recurring";
 
 const url = runtimeEnv().REACT_APP_API_URL;
 
@@ -193,15 +194,18 @@ class Home extends Component {
               <div className="transactions_aside">
                 <div style={{ display: "flex", alignItems: "center" }}>
                   {this.state.expenses.length > 0 ? (
-                    <Summary
-                      donations={this.state.donations}
-                      purchases={this.state.purchases}
-                      donated={this.state.donated}
-                      income={this.state.income}
-                      spent={this.state.spent}
-                      total={this.state.total}
-                      categories={this.state.categories}
-                    />
+                    <>
+                      <Summary
+                        donations={this.state.donations}
+                        purchases={this.state.purchases}
+                        donated={this.state.donated}
+                        income={this.state.income}
+                        spent={this.state.spent}
+                        total={this.state.total}
+                        categories={this.state.categories}
+                      />
+                      <Recurring expenses={this.state.expenses} />
+                    </>
                   ) : null}
                 </div>
               </div>
@@ -223,6 +227,7 @@ class Home extends Component {
                   expenses={this.state.expenses}
                   onEdit={this.updateExpenses}
                 />
+
                 {/* ) : null} */}
               </div>
             </div>
