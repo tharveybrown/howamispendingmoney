@@ -105,11 +105,11 @@ div.layout {
   /* overflow: hidden; */
 }
 
-div.layout .transactions_two_columns {
-  flex-direction: row;
-}
+/* div.layout .transactions_two_columns {
+} */
 
 div.layout .transactions_two_columns {
+  flex-direction: row;
   width: 100%;
   height: 100%;
   position: relative;
@@ -117,22 +117,22 @@ div.layout .transactions_two_columns {
   display: flex;
 }
 
-/* div.layout div.layout_noscroll {
+div.layout div.layout_noscroll {
   width: 100%;
   height: 100%;
-  position: relative; */
-/* overflow: hidden; */
-/* display: flex;
-  flex-direction: column;
-} */
+  position: relative;
 
-/* .transactions_aside {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactions_aside {
   width: 750px;
   border-right: solid 1px var(--divider-color);
 
   -webkit-overflow-scrolling: touch;
   overflow: auto;
-} */
+}
 
 .summary_cards {
   margin-bottom: 10px;
@@ -205,21 +205,20 @@ div.layout .transactions_two_columns {
   margin-bottom: 5px;
 }
 .accordian-box {
-  /* height: "400px"; */
   overflow: auto;
 }
 
 .react-bootstrap-table {
   overflow: auto !important;
 
-  max-height: 700px;
+  max-height: 1000px;
 }
 
-div.layout div.layout_noscroll {
+/* div.layout div.layout_noscroll {
   margin-left: 30%;
   height: 100%;
   position: fixed;
-  /* overflow: hidden; */
+  
   display: flex;
   flex-direction: column;
 }
@@ -228,7 +227,11 @@ div.layout div.layout_noscroll {
   width: 30%;
   border-right: solid 1px var(--divider-color);
   -webkit-overflow-scrolling: touch;
-  /* overflow-x: overlay; */
+  
   overflow-y: scroll;
   position: relative;
 }
+
+.modal-backdrop {
+  position: static;
+} */
