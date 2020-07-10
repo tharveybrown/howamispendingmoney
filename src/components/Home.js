@@ -70,13 +70,19 @@ class Home extends Component {
               return a;
             }, {})
           );
+          let currentDonated = 0;
+          if (donationsOnly.length) {
+            currentDonated = donationsOnly
+              .map((d) => d.amount)
+              .reduce((a, b) => a + b);
+          }
+          let currentSpent = 0;
+          if (purchasesOnly.length) {
+            currentSpent = purchasesOnly
+              .map((d) => d.amount)
+              .reduce((a, b) => a + b);
+          }
 
-          let currentDonated = donationsOnly
-            .map((d) => d.amount)
-            .reduce((a, b) => a + b);
-          let currentSpent = purchasesOnly
-            .map((d) => d.amount)
-            .reduce((a, b) => a + b);
           let currentIncome = response.data
             .filter((exp) => exp.amount > 0)
             .map((exp) => exp.amount)
@@ -133,19 +139,17 @@ class Home extends Component {
           },
         }
       )
-      .then((res) =>
-        this.setState((previousState) => {
-          return {
-            expenses: [...previousState.expenses, res.data.transactions],
-          };
-        })
-      );
+      .then((res) => {
+        this.setState({
+          expenses: res.data,
+        });
+      });
   };
 
   updateExpenseState = (expense) => {
     return this.setState((previousState) => {
       return {
-        expenses: [...previousState.expenses, expense],
+        expenses: [...previousState.expenses, expense.expense],
       };
     });
   };

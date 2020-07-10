@@ -37,7 +37,9 @@ class NewExpense extends Component {
   };
 
   handleSubmit = (event) => {
+    console.log("SUBMIT HAPPENING");
     event.preventDefault();
+
     let {
       name,
       amount,
@@ -50,7 +52,6 @@ class NewExpense extends Component {
       isIncome,
     } = this.state;
     const token = localStorage.getItem("token");
-
     amount = !isIncome ? amount * -1 : amount;
     axios
       .post(
@@ -116,7 +117,7 @@ class NewExpense extends Component {
         <div
           className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
@@ -139,7 +140,7 @@ class NewExpense extends Component {
               <div class="modal-body">
                 <form className="form-signin" onSubmit={this.handleSubmit}>
                   <Switch
-                    handleChange={this.handleToggle}
+                    handleToggle={this.handleToggle}
                     id="isIncome"
                     name="isIncome"
                     value={isIncome}
@@ -178,6 +179,7 @@ class NewExpense extends Component {
                     name="category"
                     value={category}
                   />
+
                   {/* Is this a Donation? */}
                   <RadioBox
                     header="Is this a donation?"
@@ -185,7 +187,6 @@ class NewExpense extends Component {
                     handleChange={this.handleChange}
                     name="donation"
                     value={donation}
-                    options={["yes", "no"]}
                   ></RadioBox>
                   <RadioBox
                     header="Is this a recurring expense?"
@@ -193,7 +194,6 @@ class NewExpense extends Component {
                     handleChange={this.handleChange}
                     name="recurring"
                     value={recurring}
-                    options={["yes", "no"]}
                   ></RadioBox>
                   {/* <ExpenseSelect 
                     handleChange={this.handleChange}

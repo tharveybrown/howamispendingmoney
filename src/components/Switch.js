@@ -20,7 +20,6 @@ export default function SwitchesGroup(props) {
           label={label}
         />
       </FormGroup>
-      <FormHelperText>Be careful</FormHelperText>
     </FormControl>
   );
 }
