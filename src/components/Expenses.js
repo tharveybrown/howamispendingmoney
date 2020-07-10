@@ -63,7 +63,7 @@ const columns = [
 ];
 
 function dateFormatter(cell) {
-  debugger;
+  // debugger;
   let d = new Date(cell);
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
   const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d);

@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import RepeatIcon from "@material-ui/icons/Repeat";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +32,10 @@ export default function Recurring({ recurring }) {
 
   return (
     <div className={`${classes.root} accordian-box`} maxHeight={100}>
+      <Typography variant="h5" gutterBottom>
+        <RepeatIcon color="secondary" />
+        Recurring Expenses
+      </Typography>
       {recurring.length
         ? recurring.map((exp, i) => {
             return (

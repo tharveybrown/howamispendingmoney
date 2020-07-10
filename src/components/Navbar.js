@@ -18,7 +18,7 @@ const Navbar = ({ handleLogout, loggedInStatus, toggleTheme, theme }) => {
   const classes = useStyles();
   return (
     <nav
-      className={`${classes.root} navbar navbar-expand-lg navbar-light`}
+      className={`${classes.root} navbar fixed-top navbar-expand-lg navbar-light`}
       style={{ background: "#FFE973" }}
       // style={{background-color: '#FFE973'}}
     >
