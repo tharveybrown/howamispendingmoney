@@ -5,6 +5,7 @@ import BankAuth from "./BankAuth";
 import Expenses from "./Expenses";
 import Summary from "./Summary";
 import NewExpense from "./NewExpense";
+
 import axios from "axios";
 import _ from "lodash";
 
@@ -18,6 +19,7 @@ class Home extends Component {
       donated: 0,
       income: 0,
       total: 0,
+      loading: false,
       recurring: [],
       expenses: [],
       purchases: [],
@@ -30,6 +32,7 @@ class Home extends Component {
   componentDidMount() {
     const authToken = localStorage.getItem("token");
     if (authToken) {
+      this.toggleLoader();
       axios
         .get(`${url}/expenses`, {
           headers: {
@@ -49,7 +52,7 @@ class Home extends Component {
                 id: elem.id,
                 donation: elem.donation,
                 category: elem.category,
-                date: elem.date,
+                date: new Date(elem.date).toLocaleDateString("en-US"),
               };
             });
 
@@ -111,6 +114,7 @@ class Home extends Component {
             donations: donations,
             categories: categoryArray,
             recurring: recurringReduced,
+            loading: false,
             spent: Math.round(currentSpent * 100) / 100,
             total: Math.round(currentTotal * 100) / 100,
             income: Math.round(currentIncome * 100) / 100,
@@ -122,6 +126,7 @@ class Home extends Component {
   }
   onSuccess = (token, metadata) => {
     const authToken = localStorage.getItem("token");
+    this.toggleLoader();
     axios
       .post(
         `${url}/authlogin`,
@@ -158,6 +163,7 @@ class Home extends Component {
       )
       .then((res) => {
         this.setState({
+          loading: false,
           expenses: res.data,
         });
       });
@@ -200,6 +206,12 @@ class Home extends Component {
       );
   };
 
+  toggleLoader() {
+    this.setState({
+      loading: !this.state.loading,
+    });
+  }
+
   render() {
     return (
       <div id="container">
@@ -240,6 +252,7 @@ class Home extends Component {
                 </div>
                 {/* {this.state.expenses.length > 0 ? ( */}
                 <Expenses
+                  loading={this.state.loading}
                   expenses={this.state.expenses}
                   onEdit={this.updateExpenses}
                 />

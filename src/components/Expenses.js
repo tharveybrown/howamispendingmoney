@@ -7,6 +7,8 @@ import filterFactory, {
 } from "react-bootstrap-table2-filter";
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
 
 const columns = [
   {
@@ -81,29 +83,41 @@ function priceFormatter(cell, row) {
   }
 }
 
-const Expenses = ({ expenses, onEdit }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > * + *": {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
+
+const Expenses = ({ expenses, onEdit, loading }) => {
+  const classes = useStyles();
   function afterSaveCell(oldValue, newValue, row, column, done) {
     onEdit(row);
   }
 
   return (
     <>
-      {/* <MaterialForm /> */}
-      <BootstrapTable
-        color="primary.main"
-        striped
-        hover
-        keyField="id"
-        data={expenses}
-        filter={filterFactory()}
-        cellEdit={cellEditFactory({
-          mode: "click",
-          blurToSave: true,
-          afterSaveCell,
-        })}
-        pagination={paginationFactory()}
-        columns={columns}
-      />
+      {loading ? (
+        <CircularProgress className={classes.root} />
+      ) : (
+        <BootstrapTable
+          color="primary.main"
+          striped
+          hover
+          keyField="id"
+          data={expenses}
+          filter={filterFactory()}
+          cellEdit={cellEditFactory({
+            mode: "click",
+            blurToSave: true,
+            afterSaveCell,
+          })}
+          pagination={paginationFactory()}
+          columns={columns}
+        />
+      )}
     </>
   );
 };

@@ -48,7 +48,7 @@ export default function Recurring({ recurring }) {
                     {exp.name}
                   </Typography>
                   <Typography className={classes.secondaryHeading}>
-                    {exp.amount}
+                    $ {exp.amount}
                   </Typography>
                   <Typography
                     className={classes.heading}
@@ -65,8 +65,8 @@ export default function Recurring({ recurring }) {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
-                    {exp.date}, {exp.schedule}
+                  <Typography variant="button" display="block" gutterBottom>
+                    {exp.date} {exp.schedule}
                   </Typography>
                 </AccordionDetails>
               </Accordion>
