@@ -105,6 +105,7 @@ const Expenses = ({ expenses, onEdit, loading }) => {
         <BootstrapTable
           color="primary.main"
           striped
+          condensed
           hover
           keyField="id"
           data={expenses}
